@@ -1,7 +1,10 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "KEY_BATTERY": 0,
+        "KEY_DATE_FORMAT": 1
+    },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "Joseph Palazzolo",
     "longName": "Toothless Animated",

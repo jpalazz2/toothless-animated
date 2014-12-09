@@ -1,4 +1,7 @@
 #include <pebble.h>
+	
+#define KEY_BATTERY 0
+#define KEY_DATE_FORMAT 1
 
 static Window *s_main_window;
 static GBitmap *s_toothless_bitmap;
@@ -32,6 +35,9 @@ static PropertyAnimation *s_right_eyelid_open;
 static PropertyAnimation *s_left_eyelid_close;
 static PropertyAnimation *s_left_eyelid_open;
 
+bool s_show_battery;
+bool s_date_format;
+
 static GRect s_right_eye_home_frame;
 static GRect s_left_eye_home_frame;
 static GRect s_right_eye_center_frame;
@@ -57,6 +63,7 @@ static void battery_layer_update_proc(Layer *layer, GContext *ctx)
 	graphics_draw_rect(ctx, GRect(1,1,20,12));
 	graphics_fill_rect(ctx, GRect(22,5,3,5), 0, GCornerNone);
 	graphics_fill_rect(ctx, GRect(2,2,(18 * service.charge_percent)/100,10), 0, GCornerNone);
+	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
 }
 
 static void bluetooth_handler(bool connected)
@@ -210,15 +217,14 @@ static void update_time()
 	static char timeBuffer[] = "00:00";
 	
 	if (clock_is_24h_style())
-	{
 		strftime(timeBuffer, sizeof("00:00"), "%H:%M", tick_time);
-	}
 	else
-	{
 		strftime(timeBuffer, sizeof("00:00"), "%I:%M", tick_time);
-	}
 	
-	strftime(dateBuffer, sizeof("00.00.0000"), "%m.%d.%Y", tick_time);
+	if (s_date_format)
+		strftime(dateBuffer, sizeof("00.00.0000"), "%m.%d.%Y", tick_time);
+	else
+		strftime(dateBuffer, sizeof("00.00.0000"), "%d.%m.%Y", tick_time);
 	
 	text_layer_set_text(s_date_layer, dateBuffer);
 	text_layer_set_text(s_time_layer, timeBuffer);
@@ -235,6 +241,44 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 		else
 			schedule_look_right_then_left();
     }
+}
+
+static void inbox_received_callback(DictionaryIterator *iterator, void *context)
+{
+	Tuple *t = dict_read_first(iterator);
+	
+	while (t != NULL)
+	{
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Tuple value %d", (int)t->value->int32);
+		switch (t->key)
+		{
+			case KEY_BATTERY:
+				s_show_battery = (int)t->value->int32;
+				break;
+			case KEY_DATE_FORMAT:
+				s_date_format = (int)t->value->int32;
+				break;
+		}
+		
+		t = dict_read_next(iterator);
+	}
+	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
+	update_time();
+}
+
+static void inbox_dropped_callback(AppMessageResult reason, void *context)
+{
+	APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
+}
+
+static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context)
+{
+	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
+}
+
+static void outbox_sent_callback(DictionaryIterator *iterator, void *context)
+{
+	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox sent success!");
 }
 
 void main_window_load(Window *window)
@@ -269,6 +313,8 @@ void main_window_load(Window *window)
 	
 	s_battery_layer = bitmap_layer_create(GRect(10,7,25,15));
 	layer_set_update_proc(bitmap_layer_get_layer(s_battery_layer) , battery_layer_update_proc);
+	APP_LOG(APP_LOG_LEVEL_DEBUG, "Checking before setting hidden %d", !s_show_battery);
+	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
 	
 	s_toothless_layer = bitmap_layer_create(GRect(0,24,144,144));
 	bitmap_layer_set_alignment(s_toothless_layer, GAlignTop);
@@ -352,6 +398,24 @@ void main_window_load(Window *window)
 	bluetooth_connection_service_subscribe((BluetoothConnectionHandler) bluetooth_handler);
 }
 
+static void read_storage()
+{
+	if (persist_exists(KEY_BATTERY))
+		s_show_battery = persist_read_bool(KEY_BATTERY);
+	else
+		s_show_battery = true;
+	if (persist_exists(KEY_DATE_FORMAT))
+		s_date_format = persist_read_bool(KEY_DATE_FORMAT);
+	else
+		s_date_format = true;
+}
+
+static void store_storage()
+{
+	persist_write_bool(KEY_BATTERY, s_show_battery);
+	persist_write_bool(KEY_DATE_FORMAT, s_date_format);
+}
+
 void main_window_unload(Window *window)
 {
 	gbitmap_destroy(s_toothless_bitmap);
@@ -395,6 +459,7 @@ void main_window_unload(Window *window)
 
 void handle_init(void)
 {
+	read_storage();
   	s_main_window = window_create();
 	window_set_background_color(s_main_window, GColorBlack);
 	window_set_window_handlers(s_main_window, (WindowHandlers)
@@ -403,11 +468,17 @@ void handle_init(void)
 		.unload = main_window_unload
 	});
 	window_stack_push(s_main_window, false);
+	app_message_register_inbox_received(inbox_received_callback);
+	app_message_register_inbox_dropped(inbox_dropped_callback);
+	app_message_register_outbox_failed(outbox_failed_callback);
+	app_message_register_outbox_sent(outbox_sent_callback);
+	app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
 }
 
 void handle_deinit(void)
 {
 	window_destroy(s_main_window);
+	store_storage();
 }
 
 int main(void)
