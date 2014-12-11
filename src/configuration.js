@@ -30,7 +30,6 @@ Pebble.addEventListener("showConfiguration", function() {
 	options['battery-indicator'] = battery;
 	options['date-format'] = date_format;
 	var url = buildURL();
-	console.log(url);
   	Pebble.openURL(url);
 });
 
@@ -57,7 +56,6 @@ Pebble.addEventListener("webviewclosed", function(e) {
 			"KEY_BATTERY": battery,
 			"KEY_DATE_FORMAT": dateConfig
 		};
-		console.log(dictionary["KEY_DATE_FORMAT"]);
 		Pebble.sendAppMessage(dictionary,
 							 function(e) {
 								 console.log("Sent app message");
@@ -69,6 +67,6 @@ Pebble.addEventListener("webviewclosed", function(e) {
 		localStorage.setItem(key_battery, options['battery-indicator']);
 		localStorage.setItem(key_date_format, options['date-format']);
   	} else {
-    	console.log("Cancelled");
+    	console.log("Canceled");
   	}
 });

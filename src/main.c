@@ -249,7 +249,6 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 	
 	while (t != NULL)
 	{
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Tuple value %d", (int)t->value->int32);
 		switch (t->key)
 		{
 			case KEY_BATTERY:
@@ -313,7 +312,6 @@ void main_window_load(Window *window)
 	
 	s_battery_layer = bitmap_layer_create(GRect(10,7,25,15));
 	layer_set_update_proc(bitmap_layer_get_layer(s_battery_layer) , battery_layer_update_proc);
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "Checking before setting hidden %d", !s_show_battery);
 	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
 	
 	s_toothless_layer = bitmap_layer_create(GRect(0,24,144,144));
