@@ -3,6 +3,21 @@ var key_battery = 0;
 var key_date_format = 1;
 var options = {};
 
+function fixedEncodeURIComponent(str)
+{
+	return encodeURIComponent(str).replace(/[!'()]/g, escape).replace(/\*/g, "%2A");
+}
+
+function buildURL()
+{
+	var url = 'http://josephkpalazzolo.com/pebblefaces/toothless_configurable.html?';
+	if (options['battery-indicator'])
+		url += fixedEncodeURIComponent("battery-indicator") + '=' + fixedEncodeURIComponent(options['battery-indicator']) + '&';
+	if (options['date-format'])
+		url +=fixedEncodeURIComponent("date-format") + '=' + fixedEncodeURIComponent(options['date-format']);
+	return url;
+}
+
 Pebble.addEventListener("ready", function() {
   	console.log("ready called!");
   	initialized = true;
@@ -14,7 +29,9 @@ Pebble.addEventListener("showConfiguration", function() {
 	var date_format = localStorage.getItem(key_date_format);
 	options['battery-indicator'] = battery;
 	options['date-format'] = date_format;
-  	Pebble.openURL('http://josephkpalazzolo.com/pebblefaces/toothless_configurable.html?' + encodeURIComponent(JSON.stringify(options)));
+	var url = buildURL();
+	console.log(url);
+  	Pebble.openURL(url);
 });
 
 Pebble.addEventListener("webviewclosed", function(e) {
