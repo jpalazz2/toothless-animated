@@ -36,7 +36,7 @@
     "shortName": "Toothless",
     "uuid": "3b48fa17-4c02-497f-b397-2df5a75ff679",
     "versionCode": 1,
-    "versionLabel": "1.0",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }

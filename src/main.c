@@ -2,6 +2,9 @@
 	
 #define KEY_BATTERY 0
 #define KEY_DATE_FORMAT 1
+#define KEY_TIME_FORMAT 2
+	
+#define DEBUG 0
 
 static Window *s_main_window;
 static GBitmap *s_toothless_bitmap;
@@ -37,6 +40,7 @@ static PropertyAnimation *s_left_eyelid_open;
 
 bool s_show_battery;
 bool s_date_format;
+bool s_time_format;
 
 static GRect s_right_eye_home_frame;
 static GRect s_left_eye_home_frame;
@@ -51,6 +55,8 @@ static GRect s_left_eyelid_close_position;
 
 static void battery_handler(BatteryStateHandler handler)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery layer updating...");
 	layer_mark_dirty((Layer*) s_battery_layer);
 }
 
@@ -68,6 +74,8 @@ static void battery_layer_update_proc(Layer *layer, GContext *ctx)
 
 static void bluetooth_handler(bool connected)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Bluetooth status changed...");
 	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected);
 	layer_set_hidden(text_layer_get_layer(s_bluetooth_error_text_layer), connected);
 }
@@ -78,6 +86,18 @@ static void nullify_animation_handler(PropertyAnimation *animation)
 						   {
 							   .stopped = NULL
 						   }, NULL);
+}
+
+static void nullify_all_animation_handlers()
+{
+	nullify_animation_handler(s_right_eye_home_to_center);
+	nullify_animation_handler(s_left_eye_center_to_left);
+	nullify_animation_handler(s_left_eye_left_to_home);
+	nullify_animation_handler(s_left_eye_home_to_center);
+	nullify_animation_handler(s_right_eye_home_to_center);
+	nullify_animation_handler(s_right_eye_center_to_right);
+	nullify_animation_handler(s_right_eye_right_to_home);
+	nullify_animation_handler(s_left_eye_left_to_center);
 }
 
 static void schedule_both_eyes_right_to_left(Animation *animation, bool finished, void *context)
@@ -150,10 +170,10 @@ static void blink_finished_close(Animation *animation, bool finished, void *cont
 
 static void schedule_look_right_then_left()
 {
-	nullify_animation_handler(s_right_eye_home_to_center);
-	nullify_animation_handler(s_left_eye_center_to_left);
-	nullify_animation_handler(s_left_eye_left_to_home);
-	nullify_animation_handler(s_left_eye_home_to_center);
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Looking right then left...");
+	
+	nullify_all_animation_handlers();
 	animation_set_handlers((Animation*) s_right_eyelid_close, (AnimationHandlers)
 						   {
 							   .stopped = (AnimationStoppedHandler) blink_start_open
@@ -180,10 +200,10 @@ static void schedule_look_right_then_left()
 
 static void schedule_look_left_then_right()
 {
-	nullify_animation_handler(s_right_eye_home_to_center);
-	nullify_animation_handler(s_right_eye_center_to_right);
-	nullify_animation_handler(s_right_eye_right_to_home);
-	nullify_animation_handler(s_left_eye_left_to_center);
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Looking left then right...");
+
+	nullify_all_animation_handlers();
 	animation_set_handlers((Animation*) s_right_eyelid_close, (AnimationHandlers)
 						  {
 							  .stopped = (AnimationStoppedHandler) blink_start_open
@@ -210,6 +230,8 @@ static void schedule_look_left_then_right()
 
 static void update_time()
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Updating the time...");
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	
@@ -232,7 +254,12 @@ static void update_time()
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Tick time called...");
 	update_time();
+	
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Scheduling a blink...");
 	
 	if (tick_time->tm_sec < 55)
 	{
@@ -245,6 +272,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "App message received...");
 	Tuple *t = dict_read_first(iterator);
 	
 	while (t != NULL)
@@ -282,6 +311,8 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context)
 
 void main_window_load(Window *window)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Main window loading...");
 	s_right_eye_home_frame = GRect(85,78,30,30);
 	s_left_eye_home_frame = GRect(29,78,30,30);
 	s_right_eye_center_frame = GRect(93,78,30,30);
@@ -398,24 +429,38 @@ void main_window_load(Window *window)
 
 static void read_storage()
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Reading from persistent storage...");
+	
 	if (persist_exists(KEY_BATTERY))
 		s_show_battery = persist_read_bool(KEY_BATTERY);
 	else
 		s_show_battery = true;
+	
 	if (persist_exists(KEY_DATE_FORMAT))
 		s_date_format = persist_read_bool(KEY_DATE_FORMAT);
 	else
 		s_date_format = true;
+	
+	if (persist_exists(KEY_TIME_FORMAT))
+		s_time_format = persist_read_bool(KEY_TIME_FORMAT);
+	else
+		s_time_format = true;
 }
 
 static void store_storage()
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Storing to persistent storage...");
 	persist_write_bool(KEY_BATTERY, s_show_battery);
 	persist_write_bool(KEY_DATE_FORMAT, s_date_format);
+	persist_write_bool(KEY_TIME_FORMAT, s_time_format);
 }
 
 void main_window_unload(Window *window)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Unloading main window...");
 	gbitmap_destroy(s_toothless_bitmap);
 	gbitmap_destroy(s_toothless_left_eye);
 	gbitmap_destroy(s_toothless_right_eye);
@@ -457,6 +502,8 @@ void main_window_unload(Window *window)
 
 void handle_init(void)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Initializing...");
 	read_storage();
   	s_main_window = window_create();
 	window_set_background_color(s_main_window, GColorBlack);
