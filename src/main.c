@@ -4,7 +4,7 @@
 #define KEY_DATE_FORMAT 1
 #define KEY_TIME_FORMAT 2
 	
-#define DEBUG 0
+#define DEBUG 1
 
 static Window *s_main_window;
 static GBitmap *s_toothless_bitmap;
@@ -82,6 +82,8 @@ static void bluetooth_handler(bool connected)
 
 static void nullify_animation_handler(PropertyAnimation *animation)
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Nullifying animation handler...");
 	animation_set_handlers((Animation*) animation, (AnimationHandlers)
 						   {
 							   .stopped = NULL
@@ -90,6 +92,8 @@ static void nullify_animation_handler(PropertyAnimation *animation)
 
 static void nullify_all_animation_handlers()
 {
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Nullifying all animation handlers...");
 	nullify_animation_handler(s_right_eye_home_to_center);
 	nullify_animation_handler(s_left_eye_center_to_left);
 	nullify_animation_handler(s_left_eye_left_to_home);
@@ -250,6 +254,8 @@ static void update_time()
 	
 	text_layer_set_text(s_date_layer, dateBuffer);
 	text_layer_set_text(s_time_layer, timeBuffer);
+	if (DEBUG)
+		APP_LOG(APP_LOG_LEVEL_DEBUG, "Time updated...");
 }
 
 static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
@@ -257,17 +263,17 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Tick time called...");
 	update_time();
-	
+
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Scheduling a blink...");
-	
-	if (tick_time->tm_sec < 55)
+
+	if (tick_time->tm_sec <= 55)
 	{
 		if (tick_time->tm_min % 2 == 0)
 			schedule_look_left_then_right();
 		else
 			schedule_look_right_then_left();
-    }
+	}
 }
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context)

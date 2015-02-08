@@ -37,8 +37,8 @@ Pebble.addEventListener("webviewclosed", function(e) {
   	console.log("configuration closed");
   	// webview closed
   	//Using primitive JSON validity and non-empty check
-  	if (e.response.charAt(0) == "{" && e.response.slice(-1) == "}" && e.response.length > 5) {
-    	options = JSON.parse(decodeURIComponent(e.response));
+	options = JSON.parse(decodeURIComponent(e.response));
+  	if (options['battery-indicator'] && options['date-format'] && e.response.length > 5) {
 		var battery;
 		if (options['battery-indicator'] == 'on')
 			battery = 1;
