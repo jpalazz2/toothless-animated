@@ -20,7 +20,6 @@ static BitmapLayer *s_battery_layer;
 static BitmapLayer *s_bluetooth_error_layer;
 static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
-static TextLayer *s_bluetooth_error_text_layer;
 static PropertyAnimation *s_right_eye_home_to_right;
 static PropertyAnimation *s_left_eye_home_to_left;
 static PropertyAnimation *s_right_eye_home_to_center;
@@ -53,15 +52,13 @@ static GRect s_right_eyelid_close_position;
 static GRect s_left_eyelid_open_position;
 static GRect s_left_eyelid_close_position;
 
-static void battery_handler(BatteryStateHandler handler)
-{
+static void battery_handler(BatteryStateHandler handler) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery layer updating...");
 	layer_mark_dirty((Layer*) s_battery_layer);
 }
 
-static void battery_layer_update_proc(Layer *layer, GContext *ctx)
-{
+static void battery_layer_update_proc(Layer *layer, GContext *ctx) {
 	BatteryChargeState service = battery_state_service_peek();
 	graphics_context_set_fill_color(ctx, GColorWhite);
 	graphics_context_set_stroke_color(ctx, GColorWhite);
@@ -72,168 +69,14 @@ static void battery_layer_update_proc(Layer *layer, GContext *ctx)
 	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
 }
 
-static void bluetooth_handler(bool connected)
-{
+static void bluetooth_handler(bool connected) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Bluetooth status changed...");
 	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected);
-	layer_set_hidden(text_layer_get_layer(s_bluetooth_error_text_layer), connected);
 }
 
-static void nullify_animation_handler(PropertyAnimation *animation)
-{
-	if (DEBUG)
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Nullifying animation handler...");
-	animation_set_handlers((Animation*) animation, (AnimationHandlers)
-						   {
-							   .stopped = NULL
-						   }, NULL);
-}
 
-static void nullify_all_animation_handlers()
-{
-	if (DEBUG)
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Nullifying all animation handlers...");
-	nullify_animation_handler(s_right_eye_home_to_center);
-	nullify_animation_handler(s_left_eye_center_to_left);
-	nullify_animation_handler(s_left_eye_left_to_home);
-	nullify_animation_handler(s_left_eye_home_to_center);
-	nullify_animation_handler(s_right_eye_home_to_center);
-	nullify_animation_handler(s_right_eye_center_to_right);
-	nullify_animation_handler(s_right_eye_right_to_home);
-	nullify_animation_handler(s_left_eye_left_to_center);
-}
-
-static void schedule_both_eyes_right_to_left(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_left_eye_home_to_left);
-	animation_schedule((Animation*) s_right_eye_right_to_home);
-}
-
-static void schedule_both_eyes_left_to_right(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_left_eye_left_to_home);
-	animation_schedule((Animation*) s_right_eye_home_to_right);
-}
-
-static void schedule_both_eyes_center_to_right(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_right_eye_center_to_right);
-	animation_schedule((Animation*) s_left_eye_center_to_home);
-	animation_set_handlers((Animation*) s_right_eye_home_to_center, (AnimationHandlers)
-						   {
-								.stopped = NULL   
-						   }, NULL);
-}
-
-static void schedule_both_eyes_center_to_left(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_right_eye_center_to_home);
-	animation_schedule((Animation*) s_left_eye_center_to_left);
-	
-}
-
-static void schedule_both_eyes_left_to_center(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_right_eye_home_to_center);
-	animation_schedule((Animation*) s_left_eye_left_to_center);
-}
-
-static void schedule_both_eyes_right_to_center(Animation *animation, bool finished, void *context)
-{
-	animation_schedule((Animation*) s_right_eye_right_to_center);
-	animation_schedule((Animation*) s_left_eye_home_to_center);
-}
-
-static void blink_start_open(Animation *animation, bool finished, void *context)
-{
-	layer_set_frame((Layer*) s_toothless_right_eye_layer, s_right_eye_center_frame);
-	layer_set_frame((Layer*) s_toothless_left_eye_layer, s_left_eye_center_frame);
-	animation_schedule((Animation*) s_left_eyelid_open);
-	animation_schedule((Animation*) s_right_eyelid_open);
-}
-
-static void blink_finished_open(Animation *animation, bool finished, void *context)
-{
-	layer_set_frame((Layer*) s_toothless_left_eye_layer, s_left_eye_home_frame);
-	layer_set_frame((Layer*) s_toothless_right_eye_layer, s_right_eye_home_frame);
-	nullify_animation_handler(s_right_eyelid_open);
-	animation_schedule((Animation*) s_left_eyelid_open);
-	animation_schedule((Animation*) s_right_eyelid_open);
-}
-
-static void blink_finished_close(Animation *animation, bool finished, void *context)
-{
-	animation_set_handlers((Animation*) s_right_eyelid_close, (AnimationHandlers)
-						   {
-							   .stopped = blink_finished_open
-						   }, NULL);
-	animation_schedule((Animation*) s_left_eyelid_close);
-	animation_schedule((Animation*) s_right_eyelid_close);
-}
-
-static void schedule_look_right_then_left()
-{
-	if (DEBUG)
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Looking right then left...");
-	
-	nullify_all_animation_handlers();
-	animation_set_handlers((Animation*) s_right_eyelid_close, (AnimationHandlers)
-						   {
-							   .stopped = (AnimationStoppedHandler) blink_start_open
-						   }, NULL);
-	animation_set_handlers((Animation*) s_right_eyelid_open, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) schedule_both_eyes_center_to_right
-						  }, NULL);
-	animation_set_handlers((Animation*) s_right_eye_center_to_right, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) schedule_both_eyes_right_to_left
-						  }, NULL);
-	animation_set_handlers((Animation*) s_right_eye_right_to_home, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) schedule_both_eyes_left_to_center
-						  }, NULL);
-	animation_set_handlers((Animation*) s_left_eye_left_to_center, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) blink_finished_close
-						  }, NULL);
-	animation_schedule((Animation*) s_right_eyelid_close);
-	animation_schedule((Animation*) s_left_eyelid_close);
-}
-
-static void schedule_look_left_then_right()
-{
-	if (DEBUG)
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Looking left then right...");
-
-	nullify_all_animation_handlers();
-	animation_set_handlers((Animation*) s_right_eyelid_close, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) blink_start_open
-						  }, NULL);
-	animation_set_handlers((Animation*) s_right_eyelid_open, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) schedule_both_eyes_center_to_left
-						  }, NULL);
-	animation_set_handlers((Animation*) s_left_eye_center_to_left, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) schedule_both_eyes_left_to_right
-						  }, NULL);
-	animation_set_handlers((Animation*) s_left_eye_left_to_home, (AnimationHandlers)
-						   {
-							   .stopped = (AnimationStoppedHandler) schedule_both_eyes_right_to_center
-						   }, NULL);
-	animation_set_handlers((Animation*) s_left_eye_home_to_center, (AnimationHandlers)
-						  {
-							  .stopped = (AnimationStoppedHandler) blink_finished_close
-						  }, NULL);
-	animation_schedule((Animation*) s_right_eyelid_close);
-	animation_schedule((Animation*) s_left_eyelid_close);
-}
-
-static void update_time()
-{
+static void update_time() {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Updating the time...");
 	time_t temp = time(NULL);
@@ -258,8 +101,7 @@ static void update_time()
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Time updated...");
 }
 
-static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
-{
+static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Tick time called...");
 	update_time();
@@ -267,17 +109,16 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed)
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Scheduling a blink...");
 
-	if (tick_time->tm_sec <= 55)
+	/*if (tick_time->tm_sec <= 55)
 	{
 		if (tick_time->tm_min % 2 == 0)
 			schedule_look_left_then_right();
 		else
 			schedule_look_right_then_left();
-	}
+	}*/
 }
 
-static void inbox_received_callback(DictionaryIterator *iterator, void *context)
-{
+static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "App message received...");
 	Tuple *t = dict_read_first(iterator);
@@ -300,23 +141,19 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 	update_time();
 }
 
-static void inbox_dropped_callback(AppMessageResult reason, void *context)
-{
+static void inbox_dropped_callback(AppMessageResult reason, void *context) {
 	APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
 }
 
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context)
-{
+static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
 	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
 }
 
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context)
-{
+static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox sent success!");
 }
 
-void main_window_load(Window *window)
-{
+void main_window_load(Window *window) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Main window loading...");
 	s_right_eye_home_frame = GRect(85,78,30,30);
@@ -339,14 +176,6 @@ void main_window_load(Window *window)
 	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), bluetooth_connection_service_peek());
 	bitmap_layer_set_bitmap(s_bluetooth_error_layer, s_bluetooth_error);
 	
-	s_bluetooth_error_text_layer = text_layer_create(GRect(0,50,144,16));
-	text_layer_set_text_alignment(s_bluetooth_error_text_layer, GTextAlignmentCenter);
-	text_layer_set_font(s_bluetooth_error_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_14));
-	text_layer_set_background_color(s_bluetooth_error_text_layer, GColorClear);
-	text_layer_set_text_color(s_bluetooth_error_text_layer, GColorWhite);
-	text_layer_set_text(s_bluetooth_error_text_layer, "BTERR");
-	layer_set_hidden(text_layer_get_layer(s_bluetooth_error_text_layer), layer_get_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer)));
-	
 	s_battery_layer = bitmap_layer_create(GRect(10,7,25,15));
 	layer_set_update_proc(bitmap_layer_get_layer(s_battery_layer) , battery_layer_update_proc);
 	layer_set_hidden(bitmap_layer_get_layer(s_battery_layer), !s_show_battery);
@@ -366,23 +195,6 @@ void main_window_load(Window *window)
 	bitmap_layer_set_compositing_mode(s_toothless_right_eye_layer, GCompOpAnd);
 	bitmap_layer_set_background_color(s_right_eyelid, GColorBlack);
 	bitmap_layer_set_background_color(s_left_eyelid, GColorBlack);
-	
-	s_right_eye_home_to_right = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_home_frame, &s_right_eye_look_right_frame);
-	s_left_eye_home_to_left = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_home_frame, &s_left_eye_look_left_frame);
-	s_right_eye_home_to_center = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_home_frame, &s_right_eye_center_frame);
-	s_left_eye_home_to_center = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_home_frame, &s_left_eye_center_frame);
-	s_right_eye_right_to_center = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_look_right_frame, &s_right_eye_center_frame);
-	s_left_eye_left_to_center = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_look_left_frame, &s_left_eye_center_frame);
-	s_right_eye_center_to_right = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_center_frame, &s_right_eye_look_right_frame);
-	s_left_eye_center_to_left = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_center_frame, &s_left_eye_look_left_frame);
-	s_right_eye_center_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_center_frame, &s_right_eye_home_frame);
-	s_left_eye_center_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_center_frame, &s_left_eye_home_frame);
-	s_right_eye_right_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_look_right_frame, &s_right_eye_home_frame);
-	s_left_eye_left_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_look_left_frame, &s_left_eye_home_frame);
-	s_right_eyelid_close = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_open_position, &s_right_eyelid_close_position);
-	s_right_eyelid_open = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_close_position, &s_right_eyelid_open_position);
-	s_left_eyelid_close = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_open_position, &s_left_eyelid_close_position);
-	s_left_eyelid_open = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_close_position, &s_left_eyelid_open_position);
 	
 	s_date_layer = text_layer_create(GRect(0,105,144,38));
 	text_layer_set_background_color(s_date_layer, GColorClear);
@@ -407,34 +219,14 @@ void main_window_load(Window *window)
 	layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_battery_layer));
 	layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_toothless_layer));
 	layer_add_child(window_get_root_layer(window), bitmap_layer_get_layer(s_bluetooth_error_layer));
-	layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_bluetooth_error_text_layer));
 	layer_add_child(window_get_root_layer(window), text_layer_get_layer(s_time_layer));
-	
-	animation_set_delay((Animation*) s_right_eye_home_to_right, 500);
-	animation_set_delay((Animation*) s_left_eye_home_to_left, 500);
-	animation_set_delay((Animation*) s_right_eye_home_to_center, 500);
-	animation_set_delay((Animation*) s_left_eye_home_to_center, 500);
-	animation_set_delay((Animation*) s_right_eye_right_to_center, 500);
-	animation_set_delay((Animation*) s_left_eye_left_to_center, 500);
-	animation_set_delay((Animation*) s_left_eye_home_to_left, 500);
-	animation_set_delay((Animation*) s_right_eye_center_to_right, 500);
-	animation_set_delay((Animation*) s_left_eye_center_to_left, 500);
-	animation_set_delay((Animation*) s_right_eye_center_to_home, 500);
-	animation_set_delay((Animation*) s_left_eye_center_to_home, 500);
-	animation_set_delay((Animation*) s_right_eye_right_to_home, 500);
-	animation_set_delay((Animation*) s_left_eye_left_to_home, 500);
-	animation_set_delay((Animation*) s_right_eyelid_open, 100);
-	animation_set_delay((Animation*) s_right_eyelid_close, 500);
-	animation_set_delay((Animation*) s_left_eyelid_open, 100);
-	animation_set_delay((Animation*) s_left_eyelid_close, 500);
 	
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 	battery_state_service_subscribe((BatteryStateHandler) battery_handler);
 	bluetooth_connection_service_subscribe((BluetoothConnectionHandler) bluetooth_handler);
 }
 
-static void read_storage()
-{
+static void read_storage() {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Reading from persistent storage...");
 	
@@ -454,8 +246,7 @@ static void read_storage()
 		s_time_format = true;
 }
 
-static void store_storage()
-{
+static void store_storage() {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Storing to persistent storage...");
 	persist_write_bool(KEY_BATTERY, s_show_battery);
@@ -463,8 +254,7 @@ static void store_storage()
 	persist_write_bool(KEY_TIME_FORMAT, s_time_format);
 }
 
-void main_window_unload(Window *window)
-{
+void main_window_unload(Window *window) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Unloading main window...");
 	gbitmap_destroy(s_toothless_bitmap);
@@ -482,39 +272,19 @@ void main_window_unload(Window *window)
 	
 	text_layer_destroy(s_time_layer);
 	text_layer_destroy(s_date_layer);
-	text_layer_destroy(s_bluetooth_error_text_layer);
-	
-	property_animation_destroy(s_right_eye_home_to_right);
-	property_animation_destroy(s_left_eye_home_to_left);
-	property_animation_destroy(s_right_eye_home_to_center);
-	property_animation_destroy(s_left_eye_home_to_center);
-	property_animation_destroy(s_right_eye_right_to_center);
-	property_animation_destroy(s_left_eye_left_to_center);
-	property_animation_destroy(s_left_eye_left_to_home);
-	property_animation_destroy(s_right_eye_right_to_home);
-	property_animation_destroy(s_right_eye_center_to_home);
-	property_animation_destroy(s_left_eye_center_to_home);
-	property_animation_destroy(s_right_eye_center_to_right);
-	property_animation_destroy(s_left_eye_center_to_left);
-	property_animation_destroy(s_right_eyelid_open);
-	property_animation_destroy(s_right_eyelid_close);
-	property_animation_destroy(s_left_eyelid_open);
-	property_animation_destroy(s_left_eyelid_close);
 	
 	tick_timer_service_unsubscribe();
 	battery_state_service_unsubscribe();
 	bluetooth_connection_service_unsubscribe();
 }
 
-void handle_init(void)
-{
+void handle_init(void) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Initializing...");
 	read_storage();
   	s_main_window = window_create();
 	window_set_background_color(s_main_window, GColorBlack);
-	window_set_window_handlers(s_main_window, (WindowHandlers)
-	{
+	window_set_window_handlers(s_main_window, (WindowHandlers) {
 		.load = main_window_load,
 		.unload = main_window_unload
 	});
@@ -526,14 +296,12 @@ void handle_init(void)
 	app_message_open(app_message_inbox_size_maximum(), app_message_outbox_size_maximum());
 }
 
-void handle_deinit(void)
-{
+void handle_deinit(void) {
 	window_destroy(s_main_window);
 	store_storage();
 }
 
-int main(void)
-{
+int main(void) {
   	handle_init();
   	app_event_loop();
   	handle_deinit();

@@ -1,43 +1,48 @@
 {
-    "appKeys": {
-        "KEY_BATTERY": 0,
-        "KEY_DATE_FORMAT": 1
-    },
-    "capabilities": [
-        "configurable"
-    ],
-    "companyName": "Joseph Palazzolo",
-    "longName": "Toothless Animated",
-    "projectType": "native",
-    "resources": {
-        "media": [
-            {
-                "file": "images/toothless_dithered_small_updated.png",
-                "name": "TOOTHLESS_FACE",
-                "type": "png"
-            },
-            {
-                "file": "images/yeild_smaller.png",
-                "name": "BLUETOOTH_ERROR",
-                "type": "png"
-            },
-            {
-                "file": "images/toothless_right_eye.png",
-                "name": "TOOTHLESS_RIGHT_EYE",
-                "type": "png"
-            },
-            {
-                "file": "images/toothless_left_eye.png",
-                "name": "TOOTHLESS_LEFT_EYE",
-                "type": "png"
-            }
-        ]
-    },
-    "shortName": "Toothless",
-    "uuid": "3b48fa17-4c02-497f-b397-2df5a75ff679",
-    "versionCode": 1,
-    "versionLabel": "1.1",
-    "watchapp": {
-        "watchface": true
-    }
+  "appKeys": {
+    "KEY_BATTERY": 0,
+    "KEY_DATE_FORMAT": 1
+  },
+  "capabilities": [
+    "configurable"
+  ],
+  "companyName": "Joseph Palazzolo",
+  "longName": "Toothless Animated",
+  "projectType": "native",
+  "resources": {
+    "media": [
+      {
+        "file": "images/toothless_dithered_small_updated.png",
+        "name": "TOOTHLESS_FACE",
+        "type": "png"
+      },
+      {
+        "file": "images/yeild_smaller.png",
+        "name": "BLUETOOTH_ERROR",
+        "type": "png"
+      },
+      {
+        "file": "images/toothless_right_eye.png",
+        "name": "TOOTHLESS_RIGHT_EYE",
+        "type": "pbi"
+      },
+      {
+        "file": "images/toothless_left_eye.png",
+        "name": "TOOTHLESS_LEFT_EYE",
+        "type": "pbi"
+      }
+    ]
+  },
+  "shortName": "Toothless",
+  "uuid": "3b48fa17-4c02-497f-b397-2df5a75ff679",
+  "versionCode": 1,
+  "versionLabel": "1.1",
+  "watchapp": {
+    "watchface": true
+  },
+  "targetPlatforms": [
+    "aplite",
+    "basalt"
+  ],
+  "sdkVersion": "3"
 }
