@@ -1,7 +1,7 @@
 Archive member included because of file (symbol)
 
 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                              src/main.c.28.o (app_event_loop)
+                              src/main.c.28.o (animation_schedule)
 
 Allocating common symbols
 Common symbol       size              file
@@ -71,13 +71,7 @@ Discarded input sections
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.animation_is_scheduled
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .text.animation_schedule
-                0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.animation_set_curve
-                0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .text.animation_set_delay
-                0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .text.animation_set_duration
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.animation_set_handlers
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
@@ -331,10 +325,6 @@ Discarded input sections
  .text.persist_write_string
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.property_animation_create
-                0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .text.property_animation_create_layer_frame
-                0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .text.property_animation_destroy
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.property_animation_update_gpoint
                 0x0000000000000000        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
@@ -642,7 +632,7 @@ LOAD /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/ar
  .note.gnu.build-id
                 0x0000000000000084       0x24 linker stubs
 
-.text           0x00000000000000a8      0xf0a
+.text           0x00000000000000a8     0x13a6
  *(.text)
  .text          0x00000000000000a8       0x14 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  *(.text.*)
@@ -661,305 +651,366 @@ LOAD /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/ar
  .text.tick_handler
                 0x00000000000002a0       0x38 src/main.c.28.o
  .text.main_window_unload
-                0x00000000000002d8       0xe4 src/main.c.28.o
+                0x00000000000002d8      0x1fc src/main.c.28.o
                 0x00000000000002d8                main_window_unload
  .text.main_window_load
-                0x00000000000003bc      0x454 src/main.c.28.o
-                0x00000000000003bc                main_window_load
+                0x00000000000004d4      0x784 src/main.c.28.o
+                0x00000000000004d4                main_window_load
  .text.battery_handler
-                0x0000000000000810       0x2c src/main.c.28.o
+                0x0000000000000c58       0x54 src/main.c.28.o
  .text.battery_layer_update_proc
-                0x000000000000083c       0xe8 src/main.c.28.o
+                0x0000000000000cac       0xd0 src/main.c.28.o
  .text.handle_init
-                0x0000000000000924      0x128 src/main.c.28.o
-                0x0000000000000924                handle_init
+                0x0000000000000d7c      0x128 src/main.c.28.o
+                0x0000000000000d7c                handle_init
  .text.handle_deinit
-                0x0000000000000a4c       0x68 src/main.c.28.o
-                0x0000000000000a4c                handle_deinit
+                0x0000000000000ea4       0x68 src/main.c.28.o
+                0x0000000000000ea4                handle_deinit
  .text.startup.main
-                0x0000000000000ab4       0x12 src/main.c.28.o
-                0x0000000000000ab4                main
- *fill*         0x0000000000000ac6        0x2 
+                0x0000000000000f0c       0x12 src/main.c.28.o
+                0x0000000000000f0c                main
+ *fill*         0x0000000000000f1e        0x2 
+ .text.animation_schedule
+                0x0000000000000f20        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f20                animation_schedule
+ .text.animation_set_delay
+                0x0000000000000f2c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f2c                animation_set_delay
+ .text.animation_set_duration
+                0x0000000000000f38        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f38                animation_set_duration
  .text.app_event_loop
-                0x0000000000000ac8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ac8                app_event_loop
- .text.app_log  0x0000000000000ad4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ad4                app_log
+                0x0000000000000f44        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f44                app_event_loop
+ .text.app_log  0x0000000000000f50        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f50                app_log
  .text.app_message_open
-                0x0000000000000ae0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ae0                app_message_open
+                0x0000000000000f5c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f5c                app_message_open
  .text.battery_state_service_peek
-                0x0000000000000aec        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000aec                battery_state_service_peek
+                0x0000000000000f68        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f68                battery_state_service_peek
  .text.battery_state_service_subscribe
-                0x0000000000000af8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000af8                battery_state_service_subscribe
+                0x0000000000000f74        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f74                battery_state_service_subscribe
  .text.battery_state_service_unsubscribe
-                0x0000000000000b04        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b04                battery_state_service_unsubscribe
+                0x0000000000000f80        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f80                battery_state_service_unsubscribe
  .text.bitmap_layer_create
-                0x0000000000000b10        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b10                bitmap_layer_create
+                0x0000000000000f8c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f8c                bitmap_layer_create
  .text.bitmap_layer_destroy
-                0x0000000000000b1c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b1c                bitmap_layer_destroy
+                0x0000000000000f98        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000f98                bitmap_layer_destroy
  .text.bitmap_layer_get_layer
-                0x0000000000000b28        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b28                bitmap_layer_get_layer
+                0x0000000000000fa4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fa4                bitmap_layer_get_layer
  .text.bitmap_layer_set_alignment
-                0x0000000000000b34        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b34                bitmap_layer_set_alignment
+                0x0000000000000fb0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fb0                bitmap_layer_set_alignment
  .text.bitmap_layer_set_background_color
-                0x0000000000000b40        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b40                bitmap_layer_set_background_color
+                0x0000000000000fbc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fbc                bitmap_layer_set_background_color
  .text.bitmap_layer_set_bitmap
-                0x0000000000000b4c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b4c                bitmap_layer_set_bitmap
+                0x0000000000000fc8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fc8                bitmap_layer_set_bitmap
  .text.bitmap_layer_set_compositing_mode
-                0x0000000000000b58        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b58                bitmap_layer_set_compositing_mode
+                0x0000000000000fd4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fd4                bitmap_layer_set_compositing_mode
  .text.bluetooth_connection_service_peek
-                0x0000000000000b64        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b64                bluetooth_connection_service_peek
+                0x0000000000000fe0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fe0                bluetooth_connection_service_peek
  .text.bluetooth_connection_service_subscribe
-                0x0000000000000b70        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b70                bluetooth_connection_service_subscribe
+                0x0000000000000fec        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000fec                bluetooth_connection_service_subscribe
  .text.bluetooth_connection_service_unsubscribe
-                0x0000000000000b7c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b7c                bluetooth_connection_service_unsubscribe
+                0x0000000000000ff8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000000ff8                bluetooth_connection_service_unsubscribe
  .text.clock_is_24h_style
-                0x0000000000000b88        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b88                clock_is_24h_style
+                0x0000000000001004        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001004                clock_is_24h_style
  .text.dict_read_first
-                0x0000000000000b94        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000b94                dict_read_first
+                0x0000000000001010        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001010                dict_read_first
  .text.dict_read_next
-                0x0000000000000ba0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ba0                dict_read_next
+                0x000000000000101c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000101c                dict_read_next
  .text.fonts_get_system_font
-                0x0000000000000bac        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bac                fonts_get_system_font
+                0x0000000000001028        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001028                fonts_get_system_font
  .text.gbitmap_create_with_resource
-                0x0000000000000bb8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bb8                gbitmap_create_with_resource
+                0x0000000000001034        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001034                gbitmap_create_with_resource
  .text.gbitmap_destroy
-                0x0000000000000bc4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bc4                gbitmap_destroy
+                0x0000000000001040        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001040                gbitmap_destroy
  .text.graphics_context_set_fill_color
-                0x0000000000000bd0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bd0                graphics_context_set_fill_color
+                0x000000000000104c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000104c                graphics_context_set_fill_color
  .text.graphics_context_set_stroke_color
-                0x0000000000000bdc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bdc                graphics_context_set_stroke_color
+                0x0000000000001058        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001058                graphics_context_set_stroke_color
  .text.graphics_draw_rect
-                0x0000000000000be8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000be8                graphics_draw_rect
+                0x0000000000001064        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001064                graphics_draw_rect
  .text.graphics_fill_rect
-                0x0000000000000bf4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000bf4                graphics_fill_rect
+                0x0000000000001070        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001070                graphics_fill_rect
  .text.layer_add_child
-                0x0000000000000c00        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c00                layer_add_child
+                0x000000000000107c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000107c                layer_add_child
  .text.layer_mark_dirty
-                0x0000000000000c0c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c0c                layer_mark_dirty
+                0x0000000000001088        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001088                layer_mark_dirty
  .text.layer_set_hidden
-                0x0000000000000c18        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c18                layer_set_hidden
+                0x0000000000001094        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001094                layer_set_hidden
  .text.layer_set_update_proc
-                0x0000000000000c24        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c24                layer_set_update_proc
+                0x00000000000010a0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010a0                layer_set_update_proc
  .text.localtime
-                0x0000000000000c30        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c30                localtime
- .text.memset   0x0000000000000c3c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c3c                memset
+                0x00000000000010ac        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010ac                localtime
+ .text.memset   0x00000000000010b8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010b8                memset
  .text.persist_exists
-                0x0000000000000c48        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c48                persist_exists
+                0x00000000000010c4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010c4                persist_exists
  .text.persist_read_bool
-                0x0000000000000c54        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c54                persist_read_bool
+                0x00000000000010d0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010d0                persist_read_bool
  .text.persist_write_bool
-                0x0000000000000c60        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c60                persist_write_bool
+                0x00000000000010dc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010dc                persist_write_bool
+ .text.property_animation_create_layer_frame
+                0x00000000000010e8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010e8                property_animation_create_layer_frame
+ .text.property_animation_destroy
+                0x00000000000010f4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000010f4                property_animation_destroy
  .text.strftime
-                0x0000000000000c6c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c6c                strftime
+                0x0000000000001100        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001100                strftime
  .text.text_layer_create
-                0x0000000000000c78        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c78                text_layer_create
+                0x000000000000110c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000110c                text_layer_create
  .text.text_layer_destroy
-                0x0000000000000c84        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c84                text_layer_destroy
+                0x0000000000001118        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001118                text_layer_destroy
  .text.text_layer_get_layer
-                0x0000000000000c90        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c90                text_layer_get_layer
+                0x0000000000001124        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001124                text_layer_get_layer
  .text.text_layer_set_background_color
-                0x0000000000000c9c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000c9c                text_layer_set_background_color
+                0x0000000000001130        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001130                text_layer_set_background_color
  .text.text_layer_set_font
-                0x0000000000000ca8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ca8                text_layer_set_font
+                0x000000000000113c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000113c                text_layer_set_font
  .text.text_layer_set_text
-                0x0000000000000cb4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000cb4                text_layer_set_text
+                0x0000000000001148        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001148                text_layer_set_text
  .text.text_layer_set_text_alignment
-                0x0000000000000cc0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000cc0                text_layer_set_text_alignment
+                0x0000000000001154        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001154                text_layer_set_text_alignment
  .text.text_layer_set_text_color
-                0x0000000000000ccc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ccc                text_layer_set_text_color
+                0x0000000000001160        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001160                text_layer_set_text_color
  .text.tick_timer_service_subscribe
-                0x0000000000000cd8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000cd8                tick_timer_service_subscribe
+                0x000000000000116c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000116c                tick_timer_service_subscribe
  .text.tick_timer_service_unsubscribe
-                0x0000000000000ce4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000ce4                tick_timer_service_unsubscribe
- .text.time     0x0000000000000cf0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000cf0                time
+                0x0000000000001178        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001178                tick_timer_service_unsubscribe
+ .text.time     0x0000000000001184        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001184                time
  .text.window_create
-                0x0000000000000cfc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000cfc                window_create
+                0x0000000000001190        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001190                window_create
  .text.window_destroy
-                0x0000000000000d08        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d08                window_destroy
+                0x000000000000119c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x000000000000119c                window_destroy
  .text.window_get_root_layer
-                0x0000000000000d14        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d14                window_get_root_layer
+                0x00000000000011a8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011a8                window_get_root_layer
  .text.window_set_background_color
-                0x0000000000000d20        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d20                window_set_background_color
+                0x00000000000011b4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011b4                window_set_background_color
  .text.window_set_window_handlers
-                0x0000000000000d2c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d2c                window_set_window_handlers
+                0x00000000000011c0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011c0                window_set_window_handlers
  .text.window_stack_push
-                0x0000000000000d38        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d38                window_stack_push
+                0x00000000000011cc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011cc                window_stack_push
  .text.app_message_inbox_size_maximum
-                0x0000000000000d44        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d44                app_message_inbox_size_maximum
+                0x00000000000011d8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011d8                app_message_inbox_size_maximum
  .text.app_message_outbox_size_maximum
-                0x0000000000000d50        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d50                app_message_outbox_size_maximum
+                0x00000000000011e4        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011e4                app_message_outbox_size_maximum
  .text.app_message_register_inbox_dropped
-                0x0000000000000d5c        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d5c                app_message_register_inbox_dropped
+                0x00000000000011f0        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011f0                app_message_register_inbox_dropped
  .text.app_message_register_inbox_received
-                0x0000000000000d68        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d68                app_message_register_inbox_received
+                0x00000000000011fc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x00000000000011fc                app_message_register_inbox_received
  .text.app_message_register_outbox_failed
-                0x0000000000000d74        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d74                app_message_register_outbox_failed
+                0x0000000000001208        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001208                app_message_register_outbox_failed
  .text.app_message_register_outbox_sent
-                0x0000000000000d80        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                0x0000000000000d80                app_message_register_outbox_sent
+                0x0000000000001214        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+                0x0000000000001214                app_message_register_outbox_sent
  *(.rodata)
- .rodata        0x0000000000000d8c       0x90 src/main.c.28.o
+ .rodata        0x0000000000001220       0x98 src/main.c.28.o
  *(.rodata*)
  .rodata.str1.1
-                0x0000000000000e1c      0x196 src/main.c.28.o
+                0x00000000000012b8      0x196 src/main.c.28.o
 
-.glue_7         0x0000000000000fb4        0x0
+.glue_7         0x0000000000001450        0x0
  .glue_7        0x0000000000000000        0x0 linker stubs
 
-.glue_7t        0x0000000000000fb4        0x0
+.glue_7t        0x0000000000001450        0x0
  .glue_7t       0x0000000000000000        0x0 linker stubs
 
-.vfp11_veneer   0x0000000000000fb4        0x0
+.vfp11_veneer   0x0000000000001450        0x0
  .vfp11_veneer  0x0000000000000000        0x0 linker stubs
 
-.v4_bx          0x0000000000000fb4        0x0
+.v4_bx          0x0000000000001450        0x0
  .v4_bx         0x0000000000000000        0x0 linker stubs
 
-.iplt           0x0000000000000fb4        0x0
+.iplt           0x0000000000001450        0x0
  .iplt          0x0000000000000000        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.rel.dyn        0x0000000000000fb4        0x0
+.rel.dyn        0x0000000000001450        0x0
  .rel.iplt      0x0000000000000000        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
  .rel.got       0x0000000000000000        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.data           0x0000000000000fb4       0x15
+.data           0x0000000000001450       0x15
  *(.data)
- .data          0x0000000000000fb4        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
- .data          0x0000000000000fb4        0x4 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
-                0x0000000000000fb4                __dso_handle
- .data          0x0000000000000fb8        0x0 src/main.c.28.o
- .data          0x0000000000000fb8        0x0 aplite/appinfo.auto.c.28.o
- .data          0x0000000000000fb8        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
- .data          0x0000000000000fb8        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
- .data          0x0000000000000fb8        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
+ .data          0x0000000000001450        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
+ .data          0x0000000000001450        0x4 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+                0x0000000000001450                __dso_handle
+ .data          0x0000000000001454        0x0 src/main.c.28.o
+ .data          0x0000000000001454        0x0 aplite/appinfo.auto.c.28.o
+ .data          0x0000000000001454        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
+ .data          0x0000000000001454        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
+ .data          0x0000000000001454        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
  *(.data.*)
- .data.timeBuffer.6716
-                0x0000000000000fb8        0x6 src/main.c.28.o
- .data.dateBuffer.6715
-                0x0000000000000fbe        0xb src/main.c.28.o
+ .data.timeBuffer.6735
+                0x0000000000001454        0x6 src/main.c.28.o
+ .data.dateBuffer.6734
+                0x000000000000145a        0xb src/main.c.28.o
 
-.igot.plt       0x0000000000000fcc        0x0
+.igot.plt       0x0000000000001468        0x0
  .igot.plt      0x0000000000000000        0x0 /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.got            0x0000000000000fcc        0xc
- .got           0x0000000000000fcc        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+.got            0x0000000000001468        0xc
+ .got           0x0000000000001468        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
 
-.got.plt        0x0000000000000fd8        0xc
- .got.plt       0x0000000000000fd8        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
-                0x0000000000000fd8                _GLOBAL_OFFSET_TABLE_
+.got.plt        0x0000000000001474        0xc
+ .got.plt       0x0000000000001474        0xc /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
+                0x0000000000001474                _GLOBAL_OFFSET_TABLE_
 
-.bss            0x0000000000000fe4       0x8b
+.bss            0x0000000000001480      0x127
  *(.bss)
  *(.bss.*)
- .bss.s_right_eye_center_frame
-                0x0000000000000fe4        0x8 src/main.c.28.o
- .bss.s_right_eye_home_frame
-                0x0000000000000fec        0x8 src/main.c.28.o
- .bss.s_battery_layer
-                0x0000000000000ff4        0x4 src/main.c.28.o
- .bss.s_left_eyelid
-                0x0000000000000ff8        0x4 src/main.c.28.o
+ .bss.s_right_eye_right_to_center
+                0x0000000000001480        0x4 src/main.c.28.o
+ .bss.s_all_animations
+                0x0000000000001484       0x44 src/main.c.28.o
  .bss.s_toothless_layer
-                0x0000000000000ffc        0x4 src/main.c.28.o
- .bss.s_toothless_right_eye_layer
-                0x0000000000001000        0x4 src/main.c.28.o
- .bss.s_right_eyelid_open_position
-                0x0000000000001004        0x8 src/main.c.28.o
- .bss.s_left_eye_center_frame
-                0x000000000000100c        0x8 src/main.c.28.o
- .bss.s_time_layer
-                0x0000000000001014        0x4 src/main.c.28.o
- .bss.s_left_eye_home_frame
-                0x0000000000001018        0x8 src/main.c.28.o
- .bss.s_date_layer
-                0x0000000000001020        0x4 src/main.c.28.o
- .bss.s_bluetooth_error
-                0x0000000000001024        0x4 src/main.c.28.o
- .bss.s_right_eyelid
-                0x0000000000001028        0x4 src/main.c.28.o
- .bss.s_toothless_left_eye_layer
-                0x000000000000102c        0x4 src/main.c.28.o
- .bss.s_right_eye_look_right_frame
-                0x0000000000001030        0x8 src/main.c.28.o
- .bss.s_left_eye_look_left_frame
-                0x0000000000001038        0x8 src/main.c.28.o
- .bss.s_bluetooth_error_layer
-                0x0000000000001040        0x4 src/main.c.28.o
- .bss.s_toothless_right_eye
-                0x0000000000001044        0x4 src/main.c.28.o
+                0x00000000000014c8        0x4 src/main.c.28.o
  .bss.s_main_window
-                0x0000000000001048        0x4 src/main.c.28.o
+                0x00000000000014cc        0x4 src/main.c.28.o
+ .bss.s_left_eye_left_to_center
+                0x00000000000014d0        0x4 src/main.c.28.o
+ .bss.s_bluetooth_error
+                0x00000000000014d4        0x4 src/main.c.28.o
+ .bss.s_toothless_left_eye_layer
+                0x00000000000014d8        0x4 src/main.c.28.o
+ .bss.s_face_layer
+                0x00000000000014dc        0x4 src/main.c.28.o
+ .bss.s_left_eye_color
+                0x00000000000014e0        0x4 src/main.c.28.o
+ .bss.s_right_eye_right_frame
+                0x00000000000014e4        0x8 src/main.c.28.o
+ .bss.s_toothless_right_eye
+                0x00000000000014ec        0x4 src/main.c.28.o
+ .bss.s_right_eye_center_to_right
+                0x00000000000014f0        0x4 src/main.c.28.o
+ .bss.s_left_eye_center_to_left
+                0x00000000000014f4        0x4 src/main.c.28.o
+ .bss.s_left_eyelid
+                0x00000000000014f8        0x4 src/main.c.28.o
+ .bss.s_left_eye_left_to_home
+                0x00000000000014fc        0x4 src/main.c.28.o
+ .bss.s_date_layer
+                0x0000000000001500        0x4 src/main.c.28.o
+ .bss.s_look_right_animation
+                0x0000000000001504        0x4 src/main.c.28.o
+ .bss.s_right_eye_home_to_right
+                0x0000000000001508        0x4 src/main.c.28.o
+ .bss.s_right_eye_home_to_center
+                0x000000000000150c        0x4 src/main.c.28.o
+ .bss.s_bluetooth_error_layer
+                0x0000000000001510        0x4 src/main.c.28.o
+ .bss.s_right_eyelid_open_position
+                0x0000000000001514        0x8 src/main.c.28.o
+ .bss.s_right_eye_color
+                0x000000000000151c        0x4 src/main.c.28.o
  .bss.s_left_eyelid_close_position
-                0x000000000000104c        0x8 src/main.c.28.o
- .bss.s_toothless_bitmap
-                0x0000000000001054        0x4 src/main.c.28.o
- .bss.s_left_eyelid_open_position
-                0x0000000000001058        0x8 src/main.c.28.o
+                0x0000000000001520        0x8 src/main.c.28.o
  .bss.s_right_eyelid_close_position
-                0x0000000000001060        0x8 src/main.c.28.o
+                0x0000000000001528        0x8 src/main.c.28.o
+ .bss.s_left_eyelid_open_position
+                0x0000000000001530        0x8 src/main.c.28.o
+ .bss.s_right_eyelid
+                0x0000000000001538        0x4 src/main.c.28.o
+ .bss.s_right_eye_center_to_home
+                0x000000000000153c        0x4 src/main.c.28.o
+ .bss.s_time_layer
+                0x0000000000001540        0x4 src/main.c.28.o
+ .bss.s_left_eye_home_frame
+                0x0000000000001544        0x8 src/main.c.28.o
+ .bss.s_right_eyelid_open
+                0x000000000000154c        0x4 src/main.c.28.o
+ .bss.s_left_eye_home_to_center
+                0x0000000000001550        0x4 src/main.c.28.o
+ .bss.s_left_eye_home_to_left
+                0x0000000000001554        0x4 src/main.c.28.o
+ .bss.s_right_eye_home_frame
+                0x0000000000001558        0x8 src/main.c.28.o
+ .bss.s_left_eyelid_close
+                0x0000000000001560        0x4 src/main.c.28.o
+ .bss.s_battery_layer
+                0x0000000000001564        0x4 src/main.c.28.o
+ .bss.s_right_eyelid_close_stop
+                0x0000000000001568        0x4 src/main.c.28.o
+ .bss.s_right_eyelid_close_start
+                0x000000000000156c        0x4 src/main.c.28.o
+ .bss.s_left_eye_left_frame
+                0x0000000000001570        0x8 src/main.c.28.o
+ .bss.s_left_eyelid_open
+                0x0000000000001578        0x4 src/main.c.28.o
+ .bss.s_right_eye_center_frame
+                0x000000000000157c        0x8 src/main.c.28.o
+ .bss.s_toothless_bitmap
+                0x0000000000001584        0x4 src/main.c.28.o
+ .bss.s_left_eye_center_to_home
+                0x0000000000001588        0x4 src/main.c.28.o
+ .bss.s_toothless_right_eye_layer
+                0x000000000000158c        0x4 src/main.c.28.o
  .bss.s_toothless_left_eye
-                0x0000000000001068        0x4 src/main.c.28.o
- COMMON         0x000000000000106c        0x3 src/main.c.28.o
-                0x000000000000106c                s_date_format
-                0x000000000000106d                s_show_battery
-                0x000000000000106e                s_time_format
+                0x0000000000001590        0x4 src/main.c.28.o
+ .bss.s_battery_percentage
+                0x0000000000001594        0x4 src/main.c.28.o
+ .bss.s_left_eye_center_frame
+                0x0000000000001598        0x8 src/main.c.28.o
+ .bss.s_right_eye_right_to_home
+                0x00000000000015a0        0x4 src/main.c.28.o
+ COMMON         0x00000000000015a4        0x3 src/main.c.28.o
+                0x00000000000015a4                s_date_format
+                0x00000000000015a5                s_show_battery
+                0x00000000000015a6                s_time_format
 
 DISCARD
  libc.a(*)
@@ -992,16 +1043,16 @@ OUTPUT(/Users/jpalazz2/Documents/toothless-animated/build/aplite/pebble-app.elf 
  .comment       0x0000000000000000       0x4f aplite/appinfo.auto.c.28.o
  .comment       0x0000000000000000       0x4f /Users/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
 
-.debug_info     0x0000000000000000     0x23a7
- .debug_info    0x0000000000000000     0x2060 src/main.c.28.o
- .debug_info    0x0000000000002060      0x347 aplite/appinfo.auto.c.28.o
+.debug_info     0x0000000000000000     0x2a09
+ .debug_info    0x0000000000000000     0x26c2 src/main.c.28.o
+ .debug_info    0x00000000000026c2      0x347 aplite/appinfo.auto.c.28.o
 
-.debug_abbrev   0x0000000000000000      0x407
- .debug_abbrev  0x0000000000000000      0x369 src/main.c.28.o
- .debug_abbrev  0x0000000000000369       0x9e aplite/appinfo.auto.c.28.o
+.debug_abbrev   0x0000000000000000      0x414
+ .debug_abbrev  0x0000000000000000      0x376 src/main.c.28.o
+ .debug_abbrev  0x0000000000000376       0x9e aplite/appinfo.auto.c.28.o
 
-.debug_loc      0x0000000000000000      0x3ea
- .debug_loc     0x0000000000000000      0x3ea src/main.c.28.o
+.debug_loc      0x0000000000000000      0x40a
+ .debug_loc     0x0000000000000000      0x40a src/main.c.28.o
 
 .debug_aranges  0x0000000000000000       0xa0
  .debug_aranges
@@ -1012,15 +1063,15 @@ OUTPUT(/Users/jpalazz2/Documents/toothless-animated/build/aplite/pebble-app.elf 
 .debug_ranges   0x0000000000000000       0xb8
  .debug_ranges  0x0000000000000000       0xb8 src/main.c.28.o
 
-.debug_line     0x0000000000000000      0x5b5
- .debug_line    0x0000000000000000      0x476 src/main.c.28.o
- .debug_line    0x0000000000000476      0x13f aplite/appinfo.auto.c.28.o
+.debug_line     0x0000000000000000      0x699
+ .debug_line    0x0000000000000000      0x55a src/main.c.28.o
+ .debug_line    0x000000000000055a      0x13f aplite/appinfo.auto.c.28.o
 
-.debug_str      0x0000000000000000     0x16f8
- .debug_str     0x0000000000000000     0x14e5 src/main.c.28.o
-                                       0x15a8 (size before relaxing)
- .debug_str     0x00000000000014e5      0x213 aplite/appinfo.auto.c.28.o
+.debug_str      0x0000000000000000     0x1884
+ .debug_str     0x0000000000000000     0x1671 src/main.c.28.o
+                                       0x173e (size before relaxing)
+ .debug_str     0x0000000000001671      0x213 aplite/appinfo.auto.c.28.o
                                         0x3a3 (size before relaxing)
 
-.debug_frame    0x0000000000000000      0x174
- .debug_frame   0x0000000000000000      0x174 src/main.c.28.o
+.debug_frame    0x0000000000000000      0x180
+ .debug_frame   0x0000000000000000      0x180 src/main.c.28.o

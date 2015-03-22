@@ -14,12 +14,12 @@
       {
         "file": "images/toothless_dithered_small_updated.png",
         "name": "TOOTHLESS_FACE",
-        "type": "png"
+        "type": "pbi"
       },
       {
         "file": "images/yeild_smaller.png",
         "name": "BLUETOOTH_ERROR",
-        "type": "png"
+        "type": "pbi"
       },
       {
         "file": "images/toothless_right_eye.png",
