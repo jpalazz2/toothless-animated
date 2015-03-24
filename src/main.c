@@ -5,6 +5,7 @@
 #define KEY_TIME_FORMAT 2
 	
 #define DEBUG 1
+#define NUM_ANIMATIONS 18 
 
 static Window *s_main_window;
 static GBitmap *s_toothless_bitmap;
@@ -23,7 +24,7 @@ static BitmapLayer *s_battery_layer;
 static BitmapLayer *s_bluetooth_error_layer;
 static TextLayer *s_time_layer;
 static TextLayer *s_date_layer;
-static PropertyAnimation *s_all_animations[17];
+static PropertyAnimation *s_all_animations[NUM_ANIMATIONS];
 static PropertyAnimation *s_right_eye_home_to_right;
 static PropertyAnimation *s_left_eye_home_to_left;
 static PropertyAnimation *s_right_eye_home_to_center;
@@ -36,22 +37,16 @@ static PropertyAnimation *s_right_eye_center_to_home;
 static PropertyAnimation *s_left_eye_center_to_home;
 static PropertyAnimation *s_right_eye_right_to_home;
 static PropertyAnimation *s_left_eye_left_to_home;
-static PropertyAnimation *s_right_eyelid_close_start;
-static PropertyAnimation *s_right_eyelid_close_stop;
+static PropertyAnimation *s_right_eyelid_close;
+static PropertyAnimation *s_right_eyelid_close2;
 static PropertyAnimation *s_right_eyelid_open;
+static PropertyAnimation *s_right_eyelid_open2;
 static PropertyAnimation *s_left_eyelid_close;
 static PropertyAnimation *s_left_eyelid_open;
-static Animation *s_look_left_full;
-static Animation *s_look_right_full;
-static Animation *s_look_left_half;
-static Animation *s_look_right_half;
-static Animation *s_return_home_right;
-static Animation *s_return_home_left;
-static Animation *s_blink_start;
-static Animation *s_blink_finish;
-static Animation *s_blink_open;
-static Animation *s_look_right_animation;
-static Animation *blah;
+static PropertyAnimation *s_home_left_eye;
+static PropertyAnimation *s_home_right_eye;
+static PropertyAnimation *s_center_left_eye;
+static PropertyAnimation *s_center_right_eye;
 
 bool s_show_battery;
 bool s_date_format;
@@ -70,15 +65,82 @@ static GRect s_left_eyelid_close_position;
 
 static int s_battery_percentage;
 
+static void reset_screen() {
+	animation_unschedule_all();
+	layer_set_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_home_frame);
+	layer_set_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_home_frame);
+	layer_set_frame(bitmap_layer_get_layer(s_left_eyelid), s_left_eye_home_frame);
+	layer_set_frame(bitmap_layer_get_layer(s_right_eyelid), s_right_eye_home_frame);
+}
+
+static Animation* get_anim(PropertyAnimation *a) {
+	return property_animation_get_animation(a);
+}
+
+static void schedule_look_right_then_left() {
+
+	animation_schedule(get_anim(s_right_eyelid_close));
+	animation_schedule(get_anim(s_left_eyelid_close));
+}
+
+void blink_finished(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_left_eyelid_close));
+		animation_schedule(get_anim(s_right_eyelid_close2));
+	} else {
+		reset_screen();
+	}
+}
+
+void look_left_half(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_left_eye_home_to_center));
+		animation_schedule(get_anim(s_right_eye_right_to_center));
+	} else {
+		reset_screen();
+	}
+}
+
+void look_right_full(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_left_eye_left_to_home));
+		animation_schedule(get_anim(s_right_eye_home_to_right));
+	} else {
+		reset_screen();
+	}
+}
+
+void look_left_start(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_left_eye_center_to_left));
+		animation_schedule(get_anim(s_right_eye_center_to_home));
+	} else {
+		reset_screen();
+	}
+}
+
+static void schedule_look_left_then_right() {
+	animation_set_handlers(get_anim(s_right_eyelid_open), (AnimationHandlers) {
+				.stopped = look_left_start
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_center_to_home), (AnimationHandlers) {
+				.stopped = look_right_full
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_home_to_right), (AnimationHandlers) {
+				.stopped = look_left_half
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_right_to_center), (AnimationHandlers) {
+				.stopped = blink_finished
+			}, NULL);
+	animation_schedule(get_anim(s_right_eyelid_close));
+	animation_schedule(get_anim(s_left_eyelid_close));
+}
+
 static void battery_handler(BatteryStateHandler handler) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery layer updating...");
 	s_battery_percentage = battery_state_service_peek().charge_percent;
 	layer_mark_dirty((Layer*) s_battery_layer);
-}
-
-static Animation* get_anim(PropertyAnimation *a) {
-	return property_animation_get_animation(a);
 }
 
 static void battery_layer_update_proc(Layer *layer, GContext *ctx) {
@@ -131,13 +193,13 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Scheduling a blink...");
 
-	/*if (tick_time->tm_sec <= 55)
+	if (tick_time->tm_sec <= 55)
 	{
 		if (tick_time->tm_min % 2 == 0)
 			schedule_look_left_then_right();
 		else
 			schedule_look_right_then_left();
-	}*/
+	}
 }
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
@@ -175,14 +237,26 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox sent success!");
 }
 
-static void blink_close_start(void) {
-	layer_set_bounds(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_center_frame);
-	layer_set_bounds(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_center_frame);
+static void center_eyes(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		layer_set_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_center_frame);
+		layer_set_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_center_frame);
+		animation_schedule(get_anim(s_right_eyelid_open));
+		animation_schedule(get_anim(s_left_eyelid_open));
+	} else {
+		reset_screen();
+	}
 }
 
-static void blink_close_stop(void) {
-	layer_set_bounds(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_home_frame);
-	layer_set_bounds(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_home_frame);
+static void home_eyes(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		layer_set_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_home_frame);
+		layer_set_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_home_frame);
+		animation_schedule(get_anim(s_right_eyelid_open2));
+		animation_schedule(get_anim(s_left_eyelid_open));
+	} else {
+		reset_screen();
+	}
 }
 
 void main_window_load(Window *window) {
@@ -255,8 +329,6 @@ void main_window_load(Window *window) {
 	text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
 	text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 	
-	update_time();
-		
 	#ifdef PBL_COLOR 
 		// palette[0] is not set to 0, should it be?
 		// palette[1] is 255
@@ -264,6 +336,7 @@ void main_window_load(Window *window) {
 		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_left_eye_color));
 		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_right_eye_color));
 	#endif
+
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_layer));
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_left_eye_layer));
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_right_eye_layer));
@@ -289,11 +362,17 @@ void main_window_load(Window *window) {
 	s_left_eye_center_to_left = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_center_frame, &s_left_eye_left_frame);
 	s_right_eye_center_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), &s_right_eye_center_frame, &s_right_eye_home_frame);
 	s_left_eye_center_to_home = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), &s_left_eye_center_frame, &s_left_eye_home_frame);
-	s_right_eyelid_close_start = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_open_position, &s_right_eyelid_close_position);
+	s_right_eyelid_close = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_open_position, &s_right_eyelid_close_position);
+	s_right_eyelid_close2 = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_open_position, &s_right_eyelid_close_position);
 	s_right_eyelid_open = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_close_position, &s_right_eyelid_open_position);
+	s_right_eyelid_open2 = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_close_position, &s_right_eyelid_open_position);
 	s_left_eyelid_close = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_open_position, &s_left_eyelid_close_position);
 	s_left_eyelid_open = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_close_position, &s_left_eyelid_open_position);
-	s_right_eyelid_close_stop = property_animation_create_layer_frame(bitmap_layer_get_layer(s_right_eyelid), &s_right_eyelid_open_position, &s_right_eyelid_close_position);
+
+	s_home_left_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), NULL, &s_left_eye_home_frame);
+	s_home_right_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), NULL, &s_right_eye_home_frame);
+	s_center_left_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), NULL, &s_left_eye_center_frame);
+	s_center_right_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), NULL, &s_right_eye_center_frame);
 
 	s_all_animations[0] = s_right_eye_home_to_center;
 	s_all_animations[1] = s_left_eye_home_to_center;
@@ -307,41 +386,30 @@ void main_window_load(Window *window) {
 	s_all_animations[9] = s_left_eye_center_to_left;
 	s_all_animations[10] = s_right_eye_center_to_home;
 	s_all_animations[11] = s_left_eye_center_to_home;
-	s_all_animations[12] = s_right_eyelid_close_start;
+	s_all_animations[12] = s_right_eyelid_close;
 	s_all_animations[13] = s_left_eyelid_close;
 	s_all_animations[14] = s_right_eyelid_open;
 	s_all_animations[15] = s_left_eyelid_open;
-	s_all_animations[16] = s_right_eyelid_close_stop;
+	s_all_animations[16] = s_right_eyelid_close2;
+	s_all_animations[17] = s_right_eyelid_open2;
 
-	for (int i = 0; i < 16; i++)
+	for (int i = 0; i < NUM_ANIMATIONS; i++)
 	{
 		animation_set_delay(property_animation_get_animation(s_all_animations[i]), 500);
 		animation_set_duration(property_animation_get_animation(s_all_animations[i]), 200);
 	}
 
-	/*
-	animation_set_handlers(get_anim(s_right_eyelid_close_start), (AnimationHandlers) {
-			.started = NULL,
-			.stopped = (AnimationStoppedHandler) blink_close_start
-		}, NULL);
-	animation_set_handlers(get_anim(s_right_eyelid_close_stop), (AnimationHandlers) {
-			.started = NULL,
-			.stopped = (AnimationStoppedHandler) blink_close_stop
-		}, NULL);
-	*/
-
-	#ifdef PBL_COLOR
-		blah = animation_clone(get_anim(s_left_eyelid_close));
-		s_blink_start = animation_spawn_create(get_anim(s_right_eyelid_close_start), get_anim(s_left_eyelid_close), NULL);
-		s_look_right_half = animation_spawn_create(get_anim(s_left_eye_center_to_home), get_anim(s_right_eye_center_to_right), NULL);
-		s_look_left_full = animation_spawn_create(get_anim(s_left_eye_home_to_left), get_anim(s_right_eye_right_to_home), NULL);
-		s_return_home_left = animation_spawn_create(get_anim(s_left_eye_left_to_center), get_anim(s_right_eye_home_to_center), NULL);
-		s_blink_finish = animation_spawn_create(get_anim(s_right_eyelid_close_stop), blah, NULL);
-		s_blink_open = animation_spawn_create(get_anim(s_left_eyelid_open), get_anim(s_right_eyelid_open), NULL);
-		s_look_right_animation = animation_sequence_create(s_blink_start, s_blink_open, s_look_right_half, s_look_left_full, s_return_home_left, s_blink_finish, NULL);
-	#endif
-
-	animation_schedule(s_look_right_animation);
+	animation_set_delay(property_animation_get_animation(s_right_eyelid_open), 250);
+	animation_set_delay(property_animation_get_animation(s_right_eyelid_open2), 250);
+	animation_set_delay(property_animation_get_animation(s_left_eyelid_open), 250);
+	animation_set_handlers(get_anim(s_right_eyelid_close), (AnimationHandlers) {
+			.stopped = center_eyes
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eyelid_close2), (AnimationHandlers) {
+			.stopped = home_eyes
+			}, NULL);
+		
+	update_time();	
 
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
 	battery_state_service_subscribe((BatteryStateHandler) battery_handler);
@@ -398,24 +466,10 @@ void main_window_unload(Window *window) {
 	text_layer_destroy(s_time_layer);
 	text_layer_destroy(s_date_layer);
 
-	property_animation_destroy(s_right_eye_home_to_center);
-	property_animation_destroy(s_left_eye_home_to_center);
-	property_animation_destroy(s_right_eye_home_to_right);
-	property_animation_destroy(s_left_eye_home_to_left);
-	property_animation_destroy(s_right_eye_right_to_home);
-	property_animation_destroy(s_left_eye_left_to_home);
-	property_animation_destroy(s_right_eye_right_to_center);
-	property_animation_destroy(s_left_eye_left_to_center);
-	property_animation_destroy(s_right_eye_center_to_right);
-	property_animation_destroy(s_left_eye_center_to_left);
-	property_animation_destroy(s_right_eye_center_to_home);
-	property_animation_destroy(s_left_eye_center_to_home);
-	property_animation_destroy(s_right_eyelid_open);
-	property_animation_destroy(s_left_eyelid_open);
-	property_animation_destroy(s_right_eyelid_close_start);
-	property_animation_destroy(s_left_eyelid_close);
-	property_animation_destroy(s_right_eyelid_close_stop);
-	
+	for (int i = 0; i < NUM_ANIMATIONS; i++) { 
+		property_animation_destroy(s_all_animations[i]);
+	}
+
 	tick_timer_service_unsubscribe();
 	battery_state_service_unsubscribe();
 	bluetooth_connection_service_unsubscribe();
