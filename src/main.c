@@ -1,4 +1,5 @@
 #include <pebble.h>
+#include "animation.h"
 	
 #define KEY_BATTERY 0
 #define KEY_DATE_FORMAT 1
@@ -12,6 +13,20 @@ static GBitmap *s_toothless_bitmap;
 static GBitmap *s_toothless_left_eye;
 static GBitmap *s_toothless_right_eye;
 static GBitmap *s_bluetooth_error;
+static TextLayer *s_time_layer;
+static TextLayer *s_date_layer;
+
+static GRect s_right_eye_home_frame;
+static GRect s_left_eye_home_frame;
+static GRect s_right_eye_center_frame;
+static GRect s_left_eye_center_frame;
+static GRect s_right_eye_right_frame;
+static GRect s_left_eye_left_frame;
+static GRect s_right_eyelid_open_position;
+static GRect s_right_eyelid_close_position;
+static GRect s_left_eyelid_open_position;
+static GRect s_left_eyelid_close_position;
+
 static BitmapLayer *s_face_layer;
 static BitmapLayer *s_toothless_layer;
 static BitmapLayer *s_toothless_left_eye_layer;
@@ -22,9 +37,8 @@ static BitmapLayer *s_left_eye_color;
 static BitmapLayer *s_right_eye_color;
 static BitmapLayer *s_battery_layer;
 static BitmapLayer *s_bluetooth_error_layer;
-static TextLayer *s_time_layer;
-static TextLayer *s_date_layer;
-static PropertyAnimation *s_all_animations[NUM_ANIMATIONS];
+
+static PropertyAnimation **s_all_animations;
 static PropertyAnimation *s_right_eye_home_to_right;
 static PropertyAnimation *s_left_eye_home_to_left;
 static PropertyAnimation *s_right_eye_home_to_center;
@@ -43,25 +57,10 @@ static PropertyAnimation *s_right_eyelid_open;
 static PropertyAnimation *s_right_eyelid_open2;
 static PropertyAnimation *s_left_eyelid_close;
 static PropertyAnimation *s_left_eyelid_open;
-static PropertyAnimation *s_home_left_eye;
-static PropertyAnimation *s_home_right_eye;
-static PropertyAnimation *s_center_left_eye;
-static PropertyAnimation *s_center_right_eye;
 
 bool s_show_battery;
 bool s_date_format;
 bool s_time_format;
-
-static GRect s_right_eye_home_frame;
-static GRect s_left_eye_home_frame;
-static GRect s_right_eye_center_frame;
-static GRect s_left_eye_center_frame;
-static GRect s_right_eye_right_frame;
-static GRect s_left_eye_left_frame;
-static GRect s_right_eyelid_open_position;
-static GRect s_right_eyelid_close_position;
-static GRect s_left_eyelid_open_position;
-static GRect s_left_eyelid_close_position;
 
 static int s_battery_percentage;
 
@@ -77,12 +76,6 @@ static Animation* get_anim(PropertyAnimation *a) {
 	return property_animation_get_animation(a);
 }
 
-static void schedule_look_right_then_left() {
-
-	animation_schedule(get_anim(s_right_eyelid_close));
-	animation_schedule(get_anim(s_left_eyelid_close));
-}
-
 void blink_finished(Animation *animation, bool finished, void *context) {
 	if (finished) {
 		animation_schedule(get_anim(s_left_eyelid_close));
@@ -90,6 +83,50 @@ void blink_finished(Animation *animation, bool finished, void *context) {
 	} else {
 		reset_screen();
 	}
+}
+
+static void look_right_half(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_right_eye_home_to_center));
+		animation_schedule(get_anim(s_left_eye_left_to_center));
+	} else {
+		reset_screen();
+	}
+}
+
+static void look_left_full(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_right_eye_right_to_home));
+		animation_schedule(get_anim(s_left_eye_home_to_left));
+	} else {
+		reset_screen();
+	}
+}
+
+static void look_right_start(Animation *animation, bool finished, void *context) {
+	if (finished) {
+		animation_schedule(get_anim(s_right_eye_center_to_right));
+		animation_schedule(get_anim(s_left_eye_center_to_home));
+	} else {
+		reset_screen();
+	}
+}
+
+static void schedule_look_right_then_left() {
+	animation_set_handlers(get_anim(s_right_eyelid_open), (AnimationHandlers) {
+				.stopped = look_right_start
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_center_to_right), (AnimationHandlers) {
+				.stopped = look_left_full
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_right_to_home), (AnimationHandlers) {
+				.stopped = look_right_half
+			}, NULL);
+	animation_set_handlers(get_anim(s_right_eye_home_to_center), (AnimationHandlers) {
+				.stopped = blink_finished
+			}, NULL);
+	animation_schedule(get_anim(s_right_eyelid_close));
+	animation_schedule(get_anim(s_left_eyelid_close));
 }
 
 void look_left_half(Animation *animation, bool finished, void *context) {
@@ -159,10 +196,10 @@ static void bluetooth_handler(bool connected) {
 	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected);
 }
 
-
 static void update_time() {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Updating the time...");
+	APP_LOG(APP_LOG_LEVEL_DEBUG, "test log");
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	
@@ -369,11 +406,7 @@ void main_window_load(Window *window) {
 	s_left_eyelid_close = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_open_position, &s_left_eyelid_close_position);
 	s_left_eyelid_open = property_animation_create_layer_frame(bitmap_layer_get_layer(s_left_eyelid), &s_left_eyelid_close_position, &s_left_eyelid_open_position);
 
-	s_home_left_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), NULL, &s_left_eye_home_frame);
-	s_home_right_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), NULL, &s_right_eye_home_frame);
-	s_center_left_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), NULL, &s_left_eye_center_frame);
-	s_center_right_eye = property_animation_create_layer_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), NULL, &s_right_eye_center_frame);
-
+	s_all_animations = malloc(sizeof(PropertyAnimation*)*NUM_ANIMATIONS);
 	s_all_animations[0] = s_right_eye_home_to_center;
 	s_all_animations[1] = s_left_eye_home_to_center;
 	s_all_animations[2] = s_right_eye_home_to_right;
@@ -453,13 +486,13 @@ void main_window_unload(Window *window) {
 	gbitmap_destroy(s_bluetooth_error);
 
 	bitmap_layer_destroy(s_face_layer);
+	bitmap_layer_destroy(s_toothless_layer);
 	bitmap_layer_destroy(s_toothless_left_eye_layer);
 	bitmap_layer_destroy(s_toothless_right_eye_layer);
 	bitmap_layer_destroy(s_right_eyelid);
 	bitmap_layer_destroy(s_left_eyelid);
 	bitmap_layer_destroy(s_left_eye_color);
 	bitmap_layer_destroy(s_right_eye_color);
-	bitmap_layer_destroy(s_toothless_layer);
 	bitmap_layer_destroy(s_battery_layer);
 	bitmap_layer_destroy(s_bluetooth_error_layer);
 	
@@ -469,6 +502,7 @@ void main_window_unload(Window *window) {
 	for (int i = 0; i < NUM_ANIMATIONS; i++) { 
 		property_animation_destroy(s_all_animations[i]);
 	}
+	free(s_all_animations);
 
 	tick_timer_service_unsubscribe();
 	battery_state_service_unsubscribe();
