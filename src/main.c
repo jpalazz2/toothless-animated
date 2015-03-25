@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include <animation.h>
+#include <include.h>
 #include <main.h>
 	
 static void reset_screen() {
@@ -10,17 +10,24 @@ static void reset_screen() {
 	layer_set_frame(bitmap_layer_get_layer(s_right_eyelid), s_right_eye_home_frame);
 }
 
-static Animation* get_anim(PropertyAnimation *a) {
-	return property_animation_get_animation(a);
+void  rebuild_animations(void *data) {
+	APP_LOG(APP_LOG_LEVEL_DEBUG, "Regenerating animations");
+	if (*((bool*)data)) 
+		rebuild_right_animations();
+	else
+		rebuild_left_animations();
 }
 
 void blink_finished(Animation *animation, bool finished, void *context) {
 	if (finished) {
-		animation_schedule(get_anim(s_left_eyelid_close));
+		animation_schedule(get_anim(s_left_eyelid_close2));
 		animation_schedule(get_anim(s_right_eyelid_close2));
 	} else {
 		reset_screen();
 	}
+#ifdef PBL_COLOR
+	app_timer_register(2000, (AppTimerCallback) rebuild_animations, context);
+#endif
 }
 
 static void look_right_half(Animation *animation, bool finished, void *context) {
@@ -51,8 +58,7 @@ static void look_right_start(Animation *animation, bool finished, void *context)
 }
 
 static void schedule_look_right_then_left() {
-#ifdef PBL_COLOR
-#else
+	blink_type = 1;
 	animation_set_handlers(get_anim(s_right_eyelid_open), (AnimationHandlers) {
 				.stopped = look_right_start
 			}, NULL);
@@ -64,10 +70,9 @@ static void schedule_look_right_then_left() {
 			}, NULL);
 	animation_set_handlers(get_anim(s_right_eye_home_to_center), (AnimationHandlers) {
 				.stopped = blink_finished
-			}, NULL);
+			}, (void*) &blink_type);
 	animation_schedule(get_anim(s_right_eyelid_close));
 	animation_schedule(get_anim(s_left_eyelid_close));
-#endif
 }
 
 void look_left_half(Animation *animation, bool finished, void *context) {
@@ -98,8 +103,7 @@ void look_left_start(Animation *animation, bool finished, void *context) {
 }
 
 static void schedule_look_left_then_right() {
-#ifdef PBL_COLOR
-#else
+	blink_type = 0;
 	animation_set_handlers(get_anim(s_right_eyelid_open), (AnimationHandlers) {
 				.stopped = look_left_start
 			}, NULL);
@@ -111,10 +115,9 @@ static void schedule_look_left_then_right() {
 			}, NULL);
 	animation_set_handlers(get_anim(s_right_eye_right_to_center), (AnimationHandlers) {
 				.stopped = blink_finished
-			}, NULL);
+			}, (void*) &blink_type);
 	animation_schedule(get_anim(s_right_eyelid_close));
 	animation_schedule(get_anim(s_left_eyelid_close));
-#endif
 }
 
 static void battery_handler(BatteryStateHandler handler) {
@@ -218,7 +221,7 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 	APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox sent success!");
 }
 
-static void center_eyes(Animation *animation, bool finished, void *context) {
+void center_eyes(Animation *animation, bool finished, void *context) {
 	if (finished) {
 		layer_set_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_center_frame);
 		layer_set_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_center_frame);
@@ -229,12 +232,12 @@ static void center_eyes(Animation *animation, bool finished, void *context) {
 	}
 }
 
-static void home_eyes(Animation *animation, bool finished, void *context) {
+void home_eyes(Animation *animation, bool finished, void *context) {
 	if (finished) {
 		layer_set_frame(bitmap_layer_get_layer(s_toothless_right_eye_layer), s_right_eye_home_frame);
 		layer_set_frame(bitmap_layer_get_layer(s_toothless_left_eye_layer), s_left_eye_home_frame);
 		animation_schedule(get_anim(s_right_eyelid_open2));
-		animation_schedule(get_anim(s_left_eyelid_open));
+		animation_schedule(get_anim(s_left_eyelid_open2));
 	} else {
 		reset_screen();
 	}
@@ -333,17 +336,6 @@ void main_window_load(Window *window) {
 
 	create_animations();
 
-	animation_set_delay(property_animation_get_animation(s_right_eyelid_open), 250);
-	animation_set_delay(property_animation_get_animation(s_right_eyelid_open2), 250);
-	animation_set_delay(property_animation_get_animation(s_left_eyelid_open), 250);
-
-	animation_set_handlers(get_anim(s_right_eyelid_close), (AnimationHandlers) {
-			.stopped = center_eyes
-			}, NULL);
-	animation_set_handlers(get_anim(s_right_eyelid_close2), (AnimationHandlers) {
-			.stopped = home_eyes
-			}, NULL);
-		
 	update_time();	
 
 	tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
