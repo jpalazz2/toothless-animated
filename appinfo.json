@@ -30,7 +30,12 @@
         "file": "images/toothless_left_eye.png",
         "name": "TOOTHLESS_LEFT_EYE",
         "type": "pbi"
-      }
+      },
+	  {
+		"file": "images/toothless_dithered_small_color_antialiased.png",
+		"name": "TOOTHLESS_FACE_COLOR",
+		"type": "png"
+	  }
     ]
   },
   "shortName": "Toothless",

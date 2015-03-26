@@ -1,90 +1,90 @@
 Archive member included because of file (symbol)
 
 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
-                              src/main.c.28.o (animation_schedule)
+                              src/main.c.30.o (animation_schedule)
 
 Allocating common symbols
 Common symbol       size              file
 
 s_right_eye_right_to_home
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_home_to_center
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_left_eye_home_frame
-                    0x8               src/main.c.28.o
-s_left_animations   0x38              src/animation.c.28.o
+                    0x8               src/main.c.30.o
+s_left_animations   0x38              src/animation.c.30.o
 s_right_eye_right_frame
-                    0x8               src/main.c.28.o
+                    0x8               src/main.c.30.o
 s_left_eye_center_to_left
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_left_eye_left_to_center
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_left_eyelid_close
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_left_eyelid_close2
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_toothless_left_eye_layer
-                    0x4               src/main.c.28.o
-s_all_animations    0x50              src/animation.c.28.o
-s_right_animations  0x38              src/animation.c.28.o
+                    0x4               src/main.c.30.o
+s_all_animations    0x50              src/animation.c.30.o
+s_right_animations  0x38              src/animation.c.30.o
 s_left_eye_left_to_home
-                    0x4               src/animation.c.28.o
-s_date_format       0x1               src/main.c.28.o
+                    0x4               src/animation.c.30.o
+s_date_format       0x1               src/main.c.30.o
 s_left_eye_center_to_home
-                    0x4               src/animation.c.28.o
-s_right_eye_color   0x4               src/main.c.28.o
+                    0x4               src/animation.c.30.o
+s_right_eye_color   0x4               src/main.c.30.o
 s_right_eyelid_close_position
-                    0x8               src/main.c.28.o
+                    0x8               src/main.c.30.o
 s_left_eye_home_to_center
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eyelid_close
-                    0x4               src/animation.c.28.o
-blink_type          0x1               src/main.c.28.o
+                    0x4               src/animation.c.30.o
+blink_type          0x1               src/main.c.30.o
 s_left_eyelid_open2
-                    0x4               src/animation.c.28.o
-s_toothless_layer   0x4               src/main.c.28.o
+                    0x4               src/animation.c.30.o
+s_toothless_layer   0x4               src/main.c.30.o
 s_left_eye_left_frame
-                    0x8               src/main.c.28.o
+                    0x8               src/main.c.30.o
 s_right_eyelid_open_position
-                    0x8               src/main.c.28.o
-s_left_eyelid_open  0x4               src/animation.c.28.o
+                    0x8               src/main.c.30.o
+s_left_eyelid_open  0x4               src/animation.c.30.o
 s_left_eyelid_open_position
-                    0x8               src/main.c.28.o
-s_left_eye_color    0x4               src/main.c.28.o
-s_show_battery      0x1               src/main.c.28.o
+                    0x8               src/main.c.30.o
+s_left_eye_color    0x4               src/main.c.30.o
+s_show_battery      0x1               src/main.c.30.o
 s_left_eye_center_frame
-                    0x8               src/main.c.28.o
+                    0x8               src/main.c.30.o
 s_right_eye_home_frame
-                    0x8               src/main.c.28.o
-s_left_eyelid       0x4               src/main.c.28.o
+                    0x8               src/main.c.30.o
+s_left_eyelid       0x4               src/main.c.30.o
 s_right_eyelid_close2
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_center_to_right
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eyelid_open2
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_right_to_center
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_center_to_home
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_left_eyelid_close_position
-                    0x8               src/main.c.28.o
+                    0x8               src/main.c.30.o
 s_bluetooth_error_layer
-                    0x4               src/main.c.28.o
-s_face_layer        0x4               src/main.c.28.o
+                    0x4               src/main.c.30.o
+s_face_layer        0x4               src/main.c.30.o
 s_left_eye_home_to_left
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_home_to_right
-                    0x4               src/animation.c.28.o
+                    0x4               src/animation.c.30.o
 s_right_eye_center_frame
-                    0x8               src/main.c.28.o
-s_battery_layer     0x4               src/main.c.28.o
-s_time_format       0x1               src/main.c.28.o
+                    0x8               src/main.c.30.o
+s_battery_layer     0x4               src/main.c.30.o
+s_time_format       0x1               src/main.c.30.o
 s_toothless_right_eye_layer
-                    0x4               src/main.c.28.o
+                    0x4               src/main.c.30.o
 s_right_eyelid_open
-                    0x4               src/animation.c.28.o
-s_right_eyelid      0x4               src/main.c.28.o
+                    0x4               src/animation.c.30.o
+s_right_eyelid      0x4               src/main.c.30.o
 
 Discarded input sections
 
@@ -100,18 +100,18 @@ Discarded input sections
  .jcr           0x0000000000000000        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
  .tm_clone_table
                 0x0000000000000000        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
- .text          0x0000000000000000        0x0 src/animation.c.28.o
- .bss           0x0000000000000000        0x0 src/animation.c.28.o
+ .text          0x0000000000000000        0x0 src/animation.c.30.o
+ .bss           0x0000000000000000        0x0 src/animation.c.30.o
  .text.rebuild_left_animations
-                0x0000000000000000      0x3c8 src/animation.c.28.o
+                0x0000000000000000      0x3c8 src/animation.c.30.o
  .text.rebuild_right_animations
-                0x0000000000000000      0x3c0 src/animation.c.28.o
- .text          0x0000000000000000        0x0 src/main.c.28.o
- .bss           0x0000000000000000        0x0 src/main.c.28.o
+                0x0000000000000000      0x3c0 src/animation.c.30.o
+ .text          0x0000000000000000        0x0 src/main.c.30.o
+ .bss           0x0000000000000000        0x0 src/main.c.30.o
  .text.rebuild_animations
-                0x0000000000000000       0x30 src/main.c.28.o
- .text          0x0000000000000000        0x0 aplite/appinfo.auto.c.28.o
- .bss           0x0000000000000000        0x0 aplite/appinfo.auto.c.28.o
+                0x0000000000000000       0x30 src/main.c.30.o
+ .text          0x0000000000000000        0x0 aplite/appinfo.auto.c.30.o
+ .bss           0x0000000000000000        0x0 aplite/appinfo.auto.c.30.o
  .bss           0x0000000000000000        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .text.accel_data_service_subscribe__deprecated
                 0x0000000000000000        0xc /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
@@ -687,9 +687,9 @@ Linker script and memory map
 
 LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
 LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
-LOAD src/animation.c.28.o
-LOAD src/main.c.28.o
-LOAD aplite/appinfo.auto.c.28.o
+LOAD src/animation.c.30.o
+LOAD src/main.c.30.o
+LOAD aplite/appinfo.auto.c.30.o
 LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a
 START GROUP
 LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/libgcc.a
@@ -700,7 +700,7 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
 
 .header         0x0000000000000000       0x82
  *(.pbl_header)
- .pbl_header    0x0000000000000000       0x82 aplite/appinfo.auto.c.28.o
+ .pbl_header    0x0000000000000000       0x82 aplite/appinfo.auto.c.30.o
                 0x0000000000000000                __pbl_app_info
 
 .note.gnu.build-id
@@ -716,73 +716,73 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
  .text          0x00000000000000a8       0x14 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  *(.text.*)
  .text.get_anim
-                0x00000000000000bc        0x2 src/animation.c.28.o
+                0x00000000000000bc        0x2 src/animation.c.30.o
                 0x00000000000000bc                get_anim
  *fill*         0x00000000000000be        0x2 
  .text.create_animations
-                0x00000000000000c0      0x4a0 src/animation.c.28.o
+                0x00000000000000c0      0x4a0 src/animation.c.30.o
                 0x00000000000000c0                create_animations
  .text.destroy_animations
-                0x0000000000000560       0x28 src/animation.c.28.o
+                0x0000000000000560       0x28 src/animation.c.30.o
                 0x0000000000000560                destroy_animations
  .text.outbox_sent_callback
-                0x0000000000000588       0x18 src/main.c.28.o
+                0x0000000000000588       0x18 src/main.c.30.o
  .text.outbox_failed_callback
-                0x00000000000005a0       0x18 src/main.c.28.o
+                0x00000000000005a0       0x18 src/main.c.30.o
  .text.inbox_dropped_callback
-                0x00000000000005b8       0x18 src/main.c.28.o
+                0x00000000000005b8       0x18 src/main.c.30.o
  .text.bluetooth_handler
-                0x00000000000005d0       0x24 src/main.c.28.o
+                0x00000000000005d0       0x24 src/main.c.30.o
  .text.update_time
-                0x00000000000005f4       0xd0 src/main.c.28.o
+                0x00000000000005f4       0xd0 src/main.c.30.o
  .text.inbox_received_callback
-                0x00000000000006c4       0x68 src/main.c.28.o
+                0x00000000000006c4       0x68 src/main.c.30.o
  .text.main_window_unload
-                0x000000000000072c      0x100 src/main.c.28.o
+                0x000000000000072c      0x100 src/main.c.30.o
                 0x000000000000072c                main_window_unload
  .text.main_window_load
-                0x000000000000082c      0x4f4 src/main.c.28.o
+                0x000000000000082c      0x4f4 src/main.c.30.o
                 0x000000000000082c                main_window_load
  .text.battery_handler
-                0x0000000000000d20       0x44 src/main.c.28.o
+                0x0000000000000d20       0x44 src/main.c.30.o
  .text.reset_screen
-                0x0000000000000d64       0x7c src/main.c.28.o
+                0x0000000000000d64       0x7c src/main.c.30.o
  .text.battery_layer_update_proc
-                0x0000000000000de0       0xd0 src/main.c.28.o
+                0x0000000000000de0       0xd0 src/main.c.30.o
  .text.tick_handler
-                0x0000000000000eb0      0x188 src/main.c.28.o
+                0x0000000000000eb0      0x188 src/main.c.30.o
  .text.look_right_half
-                0x0000000000001038       0x3c src/main.c.28.o
+                0x0000000000001038       0x3c src/main.c.30.o
  .text.look_left_full
-                0x0000000000001074       0x3c src/main.c.28.o
+                0x0000000000001074       0x3c src/main.c.30.o
  .text.look_right_start
-                0x00000000000010b0       0x3c src/main.c.28.o
+                0x00000000000010b0       0x3c src/main.c.30.o
  .text.look_left_start
-                0x00000000000010ec       0x3c src/main.c.28.o
+                0x00000000000010ec       0x3c src/main.c.30.o
                 0x00000000000010ec                look_left_start
  .text.look_right_full
-                0x0000000000001128       0x3c src/main.c.28.o
+                0x0000000000001128       0x3c src/main.c.30.o
                 0x0000000000001128                look_right_full
  .text.look_left_half
-                0x0000000000001164       0x3c src/main.c.28.o
+                0x0000000000001164       0x3c src/main.c.30.o
                 0x0000000000001164                look_left_half
  .text.blink_finished
-                0x00000000000011a0       0x3c src/main.c.28.o
+                0x00000000000011a0       0x3c src/main.c.30.o
                 0x00000000000011a0                blink_finished
  .text.center_eyes
-                0x00000000000011dc       0x7c src/main.c.28.o
+                0x00000000000011dc       0x7c src/main.c.30.o
                 0x00000000000011dc                center_eyes
  .text.home_eyes
-                0x0000000000001258       0x7c src/main.c.28.o
+                0x0000000000001258       0x7c src/main.c.30.o
                 0x0000000000001258                home_eyes
  .text.handle_init
-                0x00000000000012d4       0xf8 src/main.c.28.o
+                0x00000000000012d4       0xf8 src/main.c.30.o
                 0x00000000000012d4                handle_init
  .text.handle_deinit
-                0x00000000000013cc       0x4c src/main.c.28.o
+                0x00000000000013cc       0x4c src/main.c.30.o
                 0x00000000000013cc                handle_deinit
  .text.startup.main
-                0x0000000000001418       0x12 src/main.c.28.o
+                0x0000000000001418       0x12 src/main.c.30.o
                 0x0000000000001418                main
  *fill*         0x000000000000142a        0x2 
  .text.animation_schedule
@@ -984,10 +984,10 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
                 0x0000000000001744        0xc /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
                 0x0000000000001744                app_message_register_outbox_sent
  *(.rodata)
- .rodata        0x0000000000001750       0x98 src/main.c.28.o
+ .rodata        0x0000000000001750       0x98 src/main.c.30.o
  *(.rodata*)
  .rodata.str1.1
-                0x00000000000017e8       0x96 src/main.c.28.o
+                0x00000000000017e8       0x96 src/main.c.30.o
 
 .glue_7         0x0000000000001880        0x0
  .glue_7        0x0000000000000000        0x0 linker stubs
@@ -1013,17 +1013,17 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
  .data          0x0000000000001880        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crti.o
  .data          0x0000000000001880        0x4 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
                 0x0000000000001880                __dso_handle
- .data          0x0000000000001884        0x0 src/animation.c.28.o
- .data          0x0000000000001884        0x0 src/main.c.28.o
- .data          0x0000000000001884        0x0 aplite/appinfo.auto.c.28.o
+ .data          0x0000000000001884        0x0 src/animation.c.30.o
+ .data          0x0000000000001884        0x0 src/main.c.30.o
+ .data          0x0000000000001884        0x0 aplite/appinfo.auto.c.30.o
  .data          0x0000000000001884        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .data          0x0000000000001884        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
  .data          0x0000000000001884        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtn.o
  *(.data.*)
- .data.timeBuffer.6808
-                0x0000000000001884        0x6 src/main.c.28.o
- .data.dateBuffer.6807
-                0x000000000000188a        0xb src/main.c.28.o
+ .data.timeBuffer.6809
+                0x0000000000001884        0x6 src/main.c.30.o
+ .data.dateBuffer.6808
+                0x000000000000188a        0xb src/main.c.30.o
 
 .igot.plt       0x0000000000001898        0x0
  .igot.plt      0x0000000000000000        0x0 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
@@ -1039,22 +1039,22 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
  *(.bss)
  *(.bss.*)
  .bss.s_date_layer
-                0x0000000000001968        0x4 src/main.c.28.o
+                0x0000000000001968        0x4 src/main.c.30.o
  .bss.s_toothless_bitmap
-                0x000000000000196c        0x4 src/main.c.28.o
+                0x000000000000196c        0x4 src/main.c.30.o
  .bss.s_toothless_right_eye
-                0x0000000000001970        0x4 src/main.c.28.o
+                0x0000000000001970        0x4 src/main.c.30.o
  .bss.s_time_layer
-                0x0000000000001974        0x4 src/main.c.28.o
+                0x0000000000001974        0x4 src/main.c.30.o
  .bss.s_battery_percentage
-                0x0000000000001978        0x4 src/main.c.28.o
+                0x0000000000001978        0x4 src/main.c.30.o
  .bss.s_bluetooth_error
-                0x000000000000197c        0x4 src/main.c.28.o
+                0x000000000000197c        0x4 src/main.c.30.o
  .bss.s_toothless_left_eye
-                0x0000000000001980        0x4 src/main.c.28.o
+                0x0000000000001980        0x4 src/main.c.30.o
  .bss.s_main_window
-                0x0000000000001984        0x4 src/main.c.28.o
- COMMON         0x0000000000001988      0x110 src/animation.c.28.o
+                0x0000000000001984        0x4 src/main.c.30.o
+ COMMON         0x0000000000001988      0x110 src/animation.c.30.o
                 0x0000000000001988                s_right_eye_right_to_home
                 0x000000000000198c                s_right_eye_home_to_center
                 0x0000000000001990                s_left_animations
@@ -1078,7 +1078,7 @@ LOAD /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm
                 0x0000000000001a8c                s_left_eye_home_to_left
                 0x0000000000001a90                s_right_eye_home_to_right
                 0x0000000000001a94                s_right_eyelid_open
- COMMON         0x0000000000001a98       0x88 src/main.c.28.o
+ COMMON         0x0000000000001a98       0x88 src/main.c.30.o
                 0x0000000000001a98                s_left_eye_home_frame
                 0x0000000000001aa0                s_right_eye_right_frame
                 0x0000000000001aa8                s_toothless_left_eye_layer
@@ -1118,11 +1118,11 @@ OUTPUT(/home/jpalazz2/Documents/toothless-animated/build/aplite/pebble-app.elf e
  .ARM.attributes
                 0x0000000000000019       0x29 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
  .ARM.attributes
-                0x0000000000000042       0x33 src/animation.c.28.o
+                0x0000000000000042       0x33 src/animation.c.30.o
  .ARM.attributes
-                0x0000000000000075       0x33 src/main.c.28.o
+                0x0000000000000075       0x33 src/main.c.30.o
  .ARM.attributes
-                0x00000000000000a8       0x33 aplite/appinfo.auto.c.28.o
+                0x00000000000000a8       0x33 aplite/appinfo.auto.c.30.o
  .ARM.attributes
                 0x00000000000000db       0x21 /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/Pebble/aplite/lib/libpebble.a(tmpOQubyMpebble.o)
  .ARM.attributes
@@ -1133,50 +1133,50 @@ OUTPUT(/home/jpalazz2/Documents/toothless-animated/build/aplite/pebble-app.elf e
 .comment        0x0000000000000000       0x4e
  .comment       0x0000000000000000       0x4e /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtbegin.o
                                          0x4f (size before relaxing)
- .comment       0x0000000000000000       0x4f src/animation.c.28.o
- .comment       0x0000000000000000       0x4f src/main.c.28.o
- .comment       0x0000000000000000       0x4f aplite/appinfo.auto.c.28.o
+ .comment       0x0000000000000000       0x4f src/animation.c.30.o
+ .comment       0x0000000000000000       0x4f src/main.c.30.o
+ .comment       0x0000000000000000       0x4f aplite/appinfo.auto.c.30.o
  .comment       0x0000000000000000       0x4f /home/jpalazz2/pebble-dev/PebbleSDK-3.0-dp4/arm-cs-tools/bin/../lib/gcc/arm-none-eabi/4.7.2/thumb2/crtend.o
 
-.debug_info     0x0000000000000000     0x3e84
- .debug_info    0x0000000000000000     0x1159 src/animation.c.28.o
- .debug_info    0x0000000000001159     0x29e4 src/main.c.28.o
- .debug_info    0x0000000000003b3d      0x347 aplite/appinfo.auto.c.28.o
+.debug_info     0x0000000000000000     0x3e92
+ .debug_info    0x0000000000000000     0x1159 src/animation.c.30.o
+ .debug_info    0x0000000000001159     0x29ec src/main.c.30.o
+ .debug_info    0x0000000000003b45      0x34d aplite/appinfo.auto.c.30.o
 
 .debug_abbrev   0x0000000000000000      0x6df
- .debug_abbrev  0x0000000000000000      0x238 src/animation.c.28.o
- .debug_abbrev  0x0000000000000238      0x409 src/main.c.28.o
- .debug_abbrev  0x0000000000000641       0x9e aplite/appinfo.auto.c.28.o
+ .debug_abbrev  0x0000000000000000      0x238 src/animation.c.30.o
+ .debug_abbrev  0x0000000000000238      0x409 src/main.c.30.o
+ .debug_abbrev  0x0000000000000641       0x9e aplite/appinfo.auto.c.30.o
 
 .debug_loc      0x0000000000000000      0xccb
- .debug_loc     0x0000000000000000       0xf7 src/animation.c.28.o
- .debug_loc     0x00000000000000f7      0xbd4 src/main.c.28.o
+ .debug_loc     0x0000000000000000       0xf7 src/animation.c.30.o
+ .debug_loc     0x00000000000000f7      0xbd4 src/main.c.30.o
 
 .debug_aranges  0x0000000000000000      0x138
  .debug_aranges
-                0x0000000000000000       0x40 src/animation.c.28.o
+                0x0000000000000000       0x40 src/animation.c.30.o
  .debug_aranges
-                0x0000000000000040       0xe0 src/main.c.28.o
+                0x0000000000000040       0xe0 src/main.c.30.o
  .debug_aranges
-                0x0000000000000120       0x18 aplite/appinfo.auto.c.28.o
+                0x0000000000000120       0x18 aplite/appinfo.auto.c.30.o
 
 .debug_ranges   0x0000000000000000      0x2f8
- .debug_ranges  0x0000000000000000       0x50 src/animation.c.28.o
- .debug_ranges  0x0000000000000050      0x2a8 src/main.c.28.o
+ .debug_ranges  0x0000000000000000       0x50 src/animation.c.30.o
+ .debug_ranges  0x0000000000000050      0x2a8 src/main.c.30.o
 
-.debug_line     0x0000000000000000      0xb2f
- .debug_line    0x0000000000000000      0x3e8 src/animation.c.28.o
- .debug_line    0x00000000000003e8      0x60a src/main.c.28.o
- .debug_line    0x00000000000009f2      0x13d aplite/appinfo.auto.c.28.o
+.debug_line     0x0000000000000000      0xb3d
+ .debug_line    0x0000000000000000      0x3e8 src/animation.c.30.o
+ .debug_line    0x00000000000003e8      0x618 src/main.c.30.o
+ .debug_line    0x0000000000000a00      0x13d aplite/appinfo.auto.c.30.o
 
-.debug_str      0x0000000000000000     0x19d0
- .debug_str     0x0000000000000000      0x7c9 src/animation.c.28.o
+.debug_str      0x0000000000000000     0x19f1
+ .debug_str     0x0000000000000000      0x7c9 src/animation.c.30.o
                                         0x833 (size before relaxing)
- .debug_str     0x00000000000007c9      0xff4 src/main.c.28.o
-                                       0x17d4 (size before relaxing)
- .debug_str     0x00000000000017bd      0x213 aplite/appinfo.auto.c.28.o
-                                        0x3a2 (size before relaxing)
+ .debug_str     0x00000000000007c9     0x1015 src/main.c.30.o
+                                       0x17f5 (size before relaxing)
+ .debug_str     0x00000000000017de      0x213 aplite/appinfo.auto.c.30.o
+                                        0x3c3 (size before relaxing)
 
 .debug_frame    0x0000000000000000      0x354
- .debug_frame   0x0000000000000000       0xbc src/animation.c.28.o
- .debug_frame   0x00000000000000bc      0x298 src/main.c.28.o
+ .debug_frame   0x0000000000000000       0xbc src/animation.c.30.o
+ .debug_frame   0x00000000000000bc      0x298 src/main.c.30.o

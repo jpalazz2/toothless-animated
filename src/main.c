@@ -128,8 +128,18 @@ static void battery_handler(BatteryStateHandler handler) {
 }
 
 static void battery_layer_update_proc(Layer *layer, GContext *ctx) {
+#ifdef PBL_COLOR
+	if (s_battery_percentage <= 20) {
+		graphics_context_set_fill_color(ctx, GColorRed);
+		graphics_context_set_stroke_color(ctx, GColorRed);
+	} else {
+		graphics_context_set_fill_color(ctx, GColorWhite);
+		graphics_context_set_stroke_color(ctx, GColorWhite);
+	}
+#else
 	graphics_context_set_fill_color(ctx, GColorWhite);
 	graphics_context_set_stroke_color(ctx, GColorWhite);
+#endif
 	graphics_draw_rect(ctx, GRect(0,0,22,14));
 	graphics_draw_rect(ctx, GRect(1,1,20,12));
 	graphics_fill_rect(ctx, GRect(22,5,3,5), 0, GCornerNone);
@@ -258,7 +268,11 @@ void main_window_load(Window *window) {
 	s_left_eyelid_open_position = GRect(15,70,39,0);
 	s_left_eyelid_close_position = GRect(15,70,39,37);
 	
+#ifdef PBL_COLOR
+	s_toothless_bitmap = gbitmap_create_with_resource(RESOURCE_ID_TOOTHLESS_FACE_COLOR);
+#else
 	s_toothless_bitmap = gbitmap_create_with_resource(RESOURCE_ID_TOOTHLESS_FACE);
+#endif
 	s_toothless_left_eye = gbitmap_create_with_resource(RESOURCE_ID_TOOTHLESS_LEFT_EYE);
 	s_toothless_right_eye = gbitmap_create_with_resource(RESOURCE_ID_TOOTHLESS_RIGHT_EYE);
 	s_bluetooth_error = gbitmap_create_with_resource(RESOURCE_ID_BLUETOOTH_ERROR);
@@ -273,19 +287,23 @@ void main_window_load(Window *window) {
 	
 	s_toothless_layer = bitmap_layer_create(GRect(0,0,144,144));
 	bitmap_layer_set_alignment(s_toothless_layer, GAlignTop);
+#ifndef PBL_COLOR
 	bitmap_layer_set_compositing_mode(s_toothless_layer, GCompOpAnd);
 	bitmap_layer_set_background_color(s_toothless_layer, GColorClear);
+#endif
 	s_right_eyelid = bitmap_layer_create(s_right_eyelid_open_position);
 	s_left_eyelid = bitmap_layer_create(s_left_eyelid_open_position);
 	s_toothless_left_eye_layer = bitmap_layer_create(s_left_eye_home_frame);
 	s_toothless_right_eye_layer = bitmap_layer_create(s_right_eye_home_frame);
 
+	/*
 	#ifdef PBL_COLOR
 		s_left_eye_color = bitmap_layer_create(s_left_eyelid_close_position);
 		s_right_eye_color = bitmap_layer_create(s_right_eyelid_close_position);
 		bitmap_layer_set_background_color(s_left_eye_color, GColorBrightGreen);
 		bitmap_layer_set_background_color(s_right_eye_color, GColorBrightGreen);
 	#endif
+	*/
 
 	bitmap_layer_set_bitmap(s_toothless_layer, s_toothless_bitmap);
 	bitmap_layer_set_bitmap(s_toothless_left_eye_layer, s_toothless_left_eye);
@@ -313,6 +331,7 @@ void main_window_load(Window *window) {
 	text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
 	text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 	
+	/*
 	#ifdef PBL_COLOR 
 		// palette[0] is not set to 0, should it be?
 		// palette[1] is 255
@@ -320,6 +339,7 @@ void main_window_load(Window *window) {
 		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_left_eye_color));
 		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_right_eye_color));
 	#endif
+	*/
 
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_layer));
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_left_eye_layer));
