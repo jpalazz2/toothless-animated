@@ -19,6 +19,7 @@ void  rebuild_animations(void *data) {
 }
 
 void blink_finished(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_left_eyelid_close2));
 		animation_schedule(get_anim(s_right_eyelid_close2));
@@ -31,6 +32,7 @@ void blink_finished(Animation *animation, bool finished, void *context) {
 }
 
 static void look_right_half(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_right_eye_home_to_center));
 		animation_schedule(get_anim(s_left_eye_left_to_center));
@@ -40,6 +42,7 @@ static void look_right_half(Animation *animation, bool finished, void *context) 
 }
 
 static void look_left_full(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_right_eye_right_to_home));
 		animation_schedule(get_anim(s_left_eye_home_to_left));
@@ -49,6 +52,7 @@ static void look_left_full(Animation *animation, bool finished, void *context) {
 }
 
 static void look_right_start(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_right_eye_center_to_right));
 		animation_schedule(get_anim(s_left_eye_center_to_home));
@@ -76,6 +80,7 @@ static void schedule_look_right_then_left() {
 }
 
 void look_left_half(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_left_eye_home_to_center));
 		animation_schedule(get_anim(s_right_eye_right_to_center));
@@ -85,6 +90,7 @@ void look_left_half(Animation *animation, bool finished, void *context) {
 }
 
 void look_right_full(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_left_eye_left_to_home));
 		animation_schedule(get_anim(s_right_eye_home_to_right));
@@ -94,6 +100,7 @@ void look_right_full(Animation *animation, bool finished, void *context) {
 }
 
 void look_left_start(Animation *animation, bool finished, void *context) {
+	psleep(1);
 	if (finished) {
 		animation_schedule(get_anim(s_left_eye_center_to_left));
 		animation_schedule(get_anim(s_right_eye_center_to_home));
