@@ -1,7 +1,8 @@
 {
   "appKeys": {
     "KEY_BATTERY": 0,
-    "KEY_DATE_FORMAT": 1
+    "KEY_DATE_FORMAT": 1,
+    "KEY_BLUETOOTH": 2
   },
   "capabilities": [
     "configurable"

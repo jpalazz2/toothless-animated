@@ -5,7 +5,7 @@
 
 #define KEY_BATTERY 0
 #define KEY_DATE_FORMAT 1
-#define KEY_TIME_FORMAT 2
+#define KEY_BLUETOOTH 2
 	
 #define DEBUG 0
 
@@ -43,7 +43,7 @@ static TextLayer *s_date_layer;
 
 bool s_show_battery;
 bool s_date_format;
-bool s_time_format;
+bool s_bluetooth_indicator;
 bool blink_type; //0 is left 1 is right
 
 static int s_battery_percentage;

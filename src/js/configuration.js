@@ -1,6 +1,7 @@
 var initialized = false;
 var key_battery = 0;
 var key_date_format = 1;
+var key_bluetooth = 2;
 var options = {};
 
 function fixedEncodeURIComponent(str)
@@ -10,11 +11,13 @@ function fixedEncodeURIComponent(str)
 
 function buildURL()
 {
-	var url = 'http://josephkpalazzolo.com/pebblefaces/toothless_configurable.html?';
+	var url = 'http://josephkpalazzolo.com/pebblefaces/toothless_configurable_june2015.html?';
 	if (options['battery-indicator'])
 		url += fixedEncodeURIComponent("battery-indicator") + '=' + fixedEncodeURIComponent(options['battery-indicator']) + '&';
 	if (options['date-format'])
 		url +=fixedEncodeURIComponent("date-format") + '=' + fixedEncodeURIComponent(options['date-format']);
+	if (options['bluetooth-indicator'])
+		url +=fixedEncodeURIComponent("bluetooth-indicator") + '=' + fixedEncodeURIComponent(options['bluetooth-indicator']);
 	return url;
 }
 
@@ -27,8 +30,10 @@ Pebble.addEventListener("showConfiguration", function() {
   	console.log("showing configuration");
 	var battery = localStorage.getItem(key_battery);
 	var date_format = localStorage.getItem(key_date_format);
+	var bluetooth_indicator = localStorage.getItem(key_bluetooth);
 	options['battery-indicator'] = battery;
 	options['date-format'] = date_format;
+	options['bluetooth-indicator'] = bluetooth_indicator;
 	var url = buildURL();
   	Pebble.openURL(url);
 });
@@ -52,9 +57,16 @@ Pebble.addEventListener("webviewclosed", function(e) {
 			}
 		else
 			dateConfig = 0;
+		var bluetooth_indicator;
+		if (options['bluetooth-indicator'] == 'on') {
+			bluetooth-indicator = 1;
+		} else {
+			bluetooth-indicator = 0;
+		}
 		var dictionary = {
 			"KEY_BATTERY": battery,
-			"KEY_DATE_FORMAT": dateConfig
+			"KEY_DATE_FORMAT": dateConfig,
+			"KEY_BLUETOOTH": bluetooth_indicator;
 		};
 		Pebble.sendAppMessage(dictionary,
 							 function(e) {
@@ -66,6 +78,7 @@ Pebble.addEventListener("webviewclosed", function(e) {
     	console.log("Options = " + JSON.stringify(options));
 		localStorage.setItem(key_battery, options['battery-indicator']);
 		localStorage.setItem(key_date_format, options['date-format']);
+		localStorage.setItem(key_bluetooth, options['bluetooth-indicator']);
   	} else {
     	console.log("Canceled");
   	}

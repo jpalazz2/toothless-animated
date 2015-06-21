@@ -157,7 +157,7 @@ static void battery_layer_update_proc(Layer *layer, GContext *ctx) {
 static void bluetooth_handler(bool connected) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Bluetooth status changed...");
-	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected);
+	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected && s_bluetooth_indicator);
 }
 
 static void update_time() {
@@ -217,6 +217,9 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 				break;
 			case KEY_DATE_FORMAT:
 				s_date_format = (int)t->value->int32;
+				break;
+			case KEY_BLUETOOTH:
+				s_bluetooth_indicator = (int)t->value->int32;
 				break;
 		}
 		
@@ -284,7 +287,7 @@ void main_window_load(Window *window) {
 	s_toothless_right_eye = gbitmap_create_with_resource(RESOURCE_ID_TOOTHLESS_RIGHT_EYE);
 	s_bluetooth_error = gbitmap_create_with_resource(RESOURCE_ID_BLUETOOTH_ERROR);
 	
-	s_bluetooth_error_layer = bitmap_layer_create(GRect(60,25,25,35));
+	s_bluetooth_error_layer = bitmap_layer_create(GRect(60,30,25,35));
 	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), bluetooth_connection_service_peek());
 	bitmap_layer_set_bitmap(s_bluetooth_error_layer, s_bluetooth_error);
 	
@@ -384,10 +387,10 @@ static void read_storage() {
 	else
 		s_date_format = true;
 	
-	if (persist_exists(KEY_TIME_FORMAT))
-		s_time_format = persist_read_bool(KEY_TIME_FORMAT);
+	if (persist_exists(KEY_BLUETOOTH))
+		s_bluetooth_indicator = persist_read_bool(KEY_BLUETOOTH);
 	else
-		s_time_format = true;
+		s_bluetooth_indicator = true;
 }
 
 static void store_storage() {
@@ -395,7 +398,7 @@ static void store_storage() {
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Storing to persistent storage...");
 	persist_write_bool(KEY_BATTERY, s_show_battery);
 	persist_write_bool(KEY_DATE_FORMAT, s_date_format);
-	persist_write_bool(KEY_TIME_FORMAT, s_time_format);
+	persist_write_bool(KEY_BLUETOOTH, s_bluetooth_indicator);
 }
 
 void main_window_unload(Window *window) {
