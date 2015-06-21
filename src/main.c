@@ -11,7 +11,6 @@ static void reset_screen() {
 }
 
 void  rebuild_animations(void *data) {
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "Regenerating animations");
 	if (*((bool*)data)) 
 		rebuild_right_animations();
 	else
@@ -157,13 +156,15 @@ static void battery_layer_update_proc(Layer *layer, GContext *ctx) {
 static void bluetooth_handler(bool connected) {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Bluetooth status changed...");
-	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), connected && s_bluetooth_indicator);
+	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), s_bluetooth_indicator
+		? connected
+		: true
+	);
 }
 
 static void update_time() {
 	if (DEBUG)
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Updating the time...");
-	APP_LOG(APP_LOG_LEVEL_DEBUG, "test log");
 	time_t temp = time(NULL);
 	struct tm *tick_time = localtime(&temp);
 	
@@ -220,6 +221,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 				break;
 			case KEY_BLUETOOTH:
 				s_bluetooth_indicator = (int)t->value->int32;
+				APP_LOG(APP_LOG_LEVEL_DEBUG, "Bluetooth-indicator: %d", s_bluetooth_indicator);
 				break;
 		}
 		
@@ -288,7 +290,10 @@ void main_window_load(Window *window) {
 	s_bluetooth_error = gbitmap_create_with_resource(RESOURCE_ID_BLUETOOTH_ERROR);
 	
 	s_bluetooth_error_layer = bitmap_layer_create(GRect(60,30,25,35));
-	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), bluetooth_connection_service_peek());
+	layer_set_hidden(bitmap_layer_get_layer(s_bluetooth_error_layer), s_bluetooth_indicator
+		? bluetooth_connection_service_peek()
+		: true
+	);
 	bitmap_layer_set_bitmap(s_bluetooth_error_layer, s_bluetooth_error);
 	
 	s_battery_layer = bitmap_layer_create(GRect(10,7,25,15));
@@ -341,16 +346,6 @@ void main_window_load(Window *window) {
 	text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28));
 	text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
 	
-	/*
-	#ifdef PBL_COLOR 
-		// palette[0] is not set to 0, should it be?
-		// palette[1] is 255
-		APP_LOG(APP_LOG_LEVEL_DEBUG, "Bitmap format: palette[0] = %d, palette[1] = %d", gbitmap_get_palette(s_toothless_left_eye)[0].argb, gbitmap_get_palette(s_toothless_left_eye)[1].argb);
-		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_left_eye_color));
-		layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_right_eye_color));
-	#endif
-	*/
-
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_layer));
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_left_eye_layer));
 	layer_add_child(bitmap_layer_get_layer(s_face_layer), bitmap_layer_get_layer(s_toothless_right_eye_layer));

@@ -12,12 +12,15 @@ function fixedEncodeURIComponent(str)
 function buildURL()
 {
 	var url = 'http://josephkpalazzolo.com/pebblefaces/toothless_configurable_june2015.html?';
-	if (options['battery-indicator'])
+	if (options['battery-indicator']) {
 		url += fixedEncodeURIComponent("battery-indicator") + '=' + fixedEncodeURIComponent(options['battery-indicator']) + '&';
-	if (options['date-format'])
-		url +=fixedEncodeURIComponent("date-format") + '=' + fixedEncodeURIComponent(options['date-format']);
-	if (options['bluetooth-indicator'])
-		url +=fixedEncodeURIComponent("bluetooth-indicator") + '=' + fixedEncodeURIComponent(options['bluetooth-indicator']);
+	}
+	if (options['date-format']) {
+		url += fixedEncodeURIComponent("date-format") + '=' + fixedEncodeURIComponent(options['date-format']) + '&';
+	}
+	if (options['bluetooth-indicator']) {
+		url += fixedEncodeURIComponent("bluetooth-indicator") + '=' + fixedEncodeURIComponent(options['bluetooth-indicator']);
+	}
 	return url;
 }
 
@@ -43,31 +46,31 @@ Pebble.addEventListener("webviewclosed", function(e) {
   	// webview closed
   	//Using primitive JSON validity and non-empty check
 	options = JSON.parse(decodeURIComponent(e.response));
-  	if (options['battery-indicator'] && options['date-format'] && e.response.length > 5) {
+  	if (options['bluetooth-indicator'] && options['battery-indicator'] && options['date-format'] && e.response.length > 5) {
 		var battery;
-		if (options['battery-indicator'] == 'on')
+		if (options['battery-indicator'] == 'on') {
 			battery = 1;
-		else
+		} else {
 			battery = 0;
+		}
 		var dateConfig;
-		if (options['date-format'] == 'a')
-			{
-				dateConfig = 1;
-				console.log("Date format a");
-			}
-		else
+		if (options['date-format'] == 'a') {
+			dateConfig = 1;
+		} else {
 			dateConfig = 0;
+		}
 		var bluetooth_indicator;
 		if (options['bluetooth-indicator'] == 'on') {
-			bluetooth-indicator = 1;
+			bluetooth_indicator = 1;
 		} else {
-			bluetooth-indicator = 0;
+			bluetooth_indicator = 0;
 		}
 		var dictionary = {
 			"KEY_BATTERY": battery,
 			"KEY_DATE_FORMAT": dateConfig,
-			"KEY_BLUETOOTH": bluetooth_indicator;
+			"KEY_BLUETOOTH": bluetooth_indicator
 		};
+		console.log(options['bluetooth-indicator']);
 		Pebble.sendAppMessage(dictionary,
 							 function(e) {
 								 console.log("Sent app message");
@@ -75,7 +78,6 @@ Pebble.addEventListener("webviewclosed", function(e) {
 							 function(e) {
 								 console.log("Failed to send app message");
 							 });
-    	console.log("Options = " + JSON.stringify(options));
 		localStorage.setItem(key_battery, options['battery-indicator']);
 		localStorage.setItem(key_date_format, options['date-format']);
 		localStorage.setItem(key_bluetooth, options['bluetooth-indicator']);
